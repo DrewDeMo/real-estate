@@ -20,7 +20,6 @@ const MotionLink = motion(Link);
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
-    const isHomePage = location.pathname === '/';
 
     useEffect(() => {
         const handleScroll = () => {
@@ -31,24 +30,7 @@ export default function Header() {
     }, []);
 
     const getHeaderStyle = () => {
-        if (isHomePage) {
-            return isScrolled ? 'bg-white py-2' : 'bg-transparent py-4';
-        }
-        return 'bg-white py-2';
-    };
-
-    const getTextStyle = (defaultColor) => {
-        if (isHomePage) {
-            return isScrolled ? 'text-gray-900' : defaultColor;
-        }
-        return 'text-gray-900';
-    };
-
-    const getLogoColor = () => {
-        if (isHomePage) {
-            return isScrolled ? '#111827' : '#FFFFFF';
-        }
-        return '#111827';
+        return isScrolled ? 'py-2' : 'bg-opacity-50 py-4';
     };
 
     const isActive = (path) => {
@@ -56,37 +38,48 @@ export default function Header() {
     };
 
     return (
-        <Disclosure as="nav" className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${getHeaderStyle()}`}>
+        <Disclosure as="nav" className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${getHeaderStyle()}`} style={{ backgroundColor: 'var(--secondary-bg)' }}>
             {({ open }) => (
                 <>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-full">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0 flex items-center">
-                                    <MGLogo className={`MGLogo mr-4 transition-all duration-300 ${isHomePage && isScrolled ? 'w-8 h-8' : 'w-10 h-10'}`} style={{ fill: getLogoColor() }} />
+                                    <MGLogo
+                                        className={`MGLogo mr-4 transition-all duration-300 ${isScrolled ? 'w-12 h-12' : 'w-16 h-16'
+                                            }`}
+                                        style={{ fill: '#FFFFFF' }}
+                                    />
                                     <MotionLink
                                         to="/"
-                                        className={`font-bold transition-all duration-300 ${getTextStyle('text-white')} ${isHomePage && isScrolled ? 'text-lg' : 'text-xl'}`}
+                                        className="flex flex-col justify-center"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
-                                        Mark Gulla Realty
+                                        <span className={`font-black transition-all duration-300 text-white ${isScrolled ? 'text-xl' : 'text-2xl'}`}>
+                                            Mark Gulla
+                                        </span>
+                                        <span className={`text-white text-xs font-light transition-all duration-300 ${isScrolled ? 'text-xs' : 'text-sm'}`}>
+                                            Full Time Realtor
+                                        </span>
                                     </MotionLink>
                                 </div>
                                 <div className="hidden md:block">
-                                    <div className="ml-10 flex items-baseline space-x-4">
+                                    <div className="ml-10 flex items-baseline space-x-6">
                                         {navigation.map((item) => (
                                             <MotionLink
                                                 key={item.name}
                                                 to={item.href}
-                                                className={`relative px-3 py-2 rounded-md font-medium transition-all duration-300 ${getTextStyle('text-white')} hover:bg-gray-200 hover:bg-opacity-20 ${isHomePage && !isScrolled ? 'text-base' : 'text-sm'} ${isActive(item.href) ? 'font-semibold' : ''}`}
+                                                className={`relative px-3 py-2 rounded-md font-medium transition-all duration-300 text-white hover:bg-opacity-20 ${!isScrolled ? 'text-base' : 'text-sm'} ${isActive(item.href) ? 'font-semibold' : ''}`}
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
+                                                style={{ '--hover-bg-color': 'var(--accent-color)' }}
                                             >
                                                 {item.name}
                                                 {isActive(item.href) && (
                                                     <motion.div
-                                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
+                                                        className="absolute bottom-0 left-0 right-0 h-0.5"
+                                                        style={{ backgroundColor: 'var(--accent-color)' }}
                                                         layoutId="underline"
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
@@ -99,23 +92,23 @@ export default function Header() {
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <div className="ml-4 flex items-center md:ml-6">
+                                <div className="ml-6 flex items-center">
                                     <MotionLink
                                         to="/contact"
-                                        className={`px-4 py-2 rounded-md font-semibold transition-all duration-300 border-2 ${
-                                            isHomePage && !isScrolled
-                                                ? 'text-white border-white hover:bg-white hover:text-blue-600'
-                                                : 'text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white'
-                                        } text-sm`}
+                                        className={`px-4 py-2 rounded-md font-semibold transition-all duration-300 ${isScrolled
+                                            ? 'text-white hover:opacity-80'
+                                            : 'bg-transparent text-white hover:bg-white hover:text-gray-900'
+                                            } text-sm`}
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
+                                        style={{ backgroundColor: 'var(--accent-color)' }}
                                     >
                                         Get in Touch
                                     </MotionLink>
                                 </div>
                             </div>
                             <div className="-mr-2 flex md:hidden">
-                                <Disclosure.Button className={`inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white transition-all duration-300 ${isHomePage && !isScrolled ? 'bg-blue-600 text-white hover:bg-blue-500' : 'bg-gray-200 text-gray-900 hover:bg-gray-300'}`}>
+                                <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-600 focus:ring-white transition-all duration-300 hover:bg-opacity-80">
                                     <span className="sr-only">Open main menu</span>
                                     {open ? (
                                         <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -138,20 +131,22 @@ export default function Header() {
                                 leaveFrom="opacity-100 translate-y-0"
                                 leaveTo="opacity-0 -translate-y-1"
                             >
-                                <Disclosure.Panel className={`md:hidden ${isHomePage && !isScrolled ? 'bg-blue-600' : 'bg-white'}`}>
+                                <Disclosure.Panel className={`md:hidden ${isScrolled ? '' : 'bg-opacity-80'}`} style={{ backgroundColor: 'var(--secondary-bg)' }}>
                                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                                         {navigation.map((item) => (
                                             <MotionLink
                                                 key={item.name}
                                                 to={item.href}
-                                                className={`relative block px-3 py-2 rounded-md text-base font-medium ${isHomePage && !isScrolled ? 'text-white hover:bg-blue-500' : 'text-gray-900 hover:bg-gray-200'} ${isActive(item.href) ? 'font-semibold' : ''}`}
+                                                className={`relative block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-opacity-20 ${isActive(item.href) ? 'font-semibold' : ''}`}
                                                 whileHover={{ scale: 1.05 }}
                                                 whileTap={{ scale: 0.95 }}
+                                                style={{ '--hover-bg-color': 'var(--accent-color)' }}
                                             >
                                                 {item.name}
                                                 {isActive(item.href) && (
                                                     <motion.div
-                                                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
+                                                        className="absolute bottom-0 left-0 right-0 h-0.5"
+                                                        style={{ backgroundColor: 'var(--accent-color)' }}
                                                         layoutId="underline-mobile"
                                                         initial={{ opacity: 0 }}
                                                         animate={{ opacity: 1 }}
@@ -162,13 +157,10 @@ export default function Header() {
                                         ))}
                                         <MotionLink
                                             to="/contact"
-                                            className={`block px-3 py-2 rounded-md text-base font-semibold mt-2 border-2 ${
-                                                isHomePage && !isScrolled
-                                                    ? 'text-white border-white hover:bg-white hover:text-blue-600'
-                                                    : 'text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white'
-                                            }`}
+                                            className="block px-3 py-2 rounded-md text-base font-semibold mt-2 text-white hover:opacity-80"
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
+                                            style={{ backgroundColor: 'var(--accent-color)' }}
                                         >
                                             Get in Touch
                                         </MotionLink>

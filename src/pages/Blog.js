@@ -14,7 +14,7 @@ const pageTransition = {
     duration: 0.5
 };
 
-const blogPosts = [
+export const blogPosts = [
     {
         id: 1,
         title: "Predicting Your Future Housing Needs",

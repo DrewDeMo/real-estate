@@ -2,8 +2,69 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Custom styles for modern black and white with red accents */
+:root {
+    --primary-bg: #ffffff;
+    --secondary-bg: #141D2F;
+    --primary-text: #141312;
+    --secondary-text: #ffffff;
+    --accent-color: #ff0000;
+    --subtle-border: #E2E8F0;
+    --gradient-start: #1a1a1a;
+    --gradient-end: #000000;
+}
+
+body {
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+}
+
+.accent-text {
+    color: var(--accent-color);
+}
+
+.accent-bg {
+    background-color: var(--accent-color);
+}
+
+.subtle-border {
+    border: 1px solid var(--subtle-border);
+}
+
+.subtle-gradient {
+    background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+}
+
+.button {
+    background-color: var(--accent-color);
+    color: var(--primary-text);
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.button:hover {
+    opacity: 0.8;
+}
+
 .MGLogo {
-    border: 1px solid white;
-    padding: .25em;
+    padding: 0.25em;
     border-radius: 4px;
+}
+
+/* Override Tailwind classes */
+.bg-white {
+    background-color: var(--primary-bg) !important;
+}
+
+.text-black {
+    color: var(--primary-text) !important;
+}
+
+.shadow,
+.shadow-md,
+.shadow-lg {
+    box-shadow: none !important;
+    border: 1px solid var(--subtle-border);
 }
