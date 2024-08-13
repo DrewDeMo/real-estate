@@ -248,7 +248,7 @@ export default function Home() {
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
                                     viewport={{ once: true }}
                                 >
-                                    <img src={`/images/blog-${index + 1}.jpg`} alt={post.title} className="w-full h-48 object-cover" />
+                                    <img src={require('../images/blog2_image.webp')} alt={post.title} className="w-full h-48 object-cover" />
                                     <div className="p-6">
                                         <div className="flex items-center text-sm text-gray-500 mb-2">
                                             <span className="mr-4">02 Apr 2024</span>
