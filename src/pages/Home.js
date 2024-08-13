@@ -156,8 +156,8 @@ export default function Home() {
                                         <span className="font-semibold">Dedicated Support Throughout the Process</span>
                                     </div>
                                 </div>
-                                <div className="flex items-center space-x-8">
-                                    <div className="text-center">
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-8">
+                                    <div className="text-center border-2 border-dashed border-red-300 rounded-lg p-4">
                                         <span className="text-4xl font-bold text-red-600">9</span>
                                         <p className="text-gray-600">Years of Experience</p>
                                     </div>
@@ -185,20 +185,26 @@ export default function Home() {
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                                 </MotionLink>
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <img src={require('../images/Mark_Headshot.webp')} alt="Mark Gulla" className="rounded-lg shadow-md" />
-                                <img src="/images/luxury-home.jpg" alt="Luxury Home" className="rounded-lg shadow-md mt-8" />
-                                <div className="bg-gray-100 rounded-lg p-4 flex items-center justify-center">
+                            <div className="grid grid-cols-6 grid-rows-6 gap-4 h-[600px]">
+                                <div className="col-span-4 row-span-4">
+                                    <img src={require('../images/Mark_Headshot.webp')} alt="Mark Gulla" className="w-full h-full object-cover rounded-lg shadow-md" />
+                                </div>
+                                <div className="col-span-2 row-span-2 flex items-center justify-center bg-gray-100 rounded-lg shadow-md">
                                     <span className="text-2xl font-bold text-gray-900">#1 in Beaver County</span>
                                 </div>
-                                <img src="../images/" alt="First Time Buyers" className="rounded-lg shadow-md" />
+                                <div className="col-span-2 row-span-2">
+                                    <img src={require('../images/first_time_image.webp')} alt="First Time Buyers" className="w-full h-full object-cover rounded-lg shadow-md" />
+                                </div>
+                                <div className="col-span-3 row-span-2">
+                                    <img src={require('../images/luxury_image.webp')} alt="Luxury Home" className="w-full h-full object-cover rounded-lg shadow-md" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 {/* Featured Listings Section */}
-                <section className="py-24 bg-slate-100"> {/* Changed background color to slate-100 */}
+                <section className="py-24 bg-slate-100">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-16">
                             <h2 className="text-4xl font-bold text-gray-900">Featured Listings</h2>
