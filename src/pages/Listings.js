@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import AdvancedSearch from '../components/AdvancedSearch';
+import heroImage from '../images/hero/hero1.webp';
 
 const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -23,12 +24,13 @@ export default function Listings() {
     const [listings, setListings] = useState([]);
     const [filteredListings, setFilteredListings] = useState([]);
 
-    // Simulated listings data
+    // Simulated listings data (expanded to 5 listings)
     const allListings = [
         { id: 1, title: 'Beautiful Family Home', address: '123 Main St, Beaver, PA', price: 299000, beds: 3, baths: 2, image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c' },
         { id: 2, title: 'Charming Cottage', address: '456 Elm St, Aliquippa, PA', price: 189000, beds: 2, baths: 1, image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9' },
         { id: 3, title: 'Modern Townhouse', address: '789 Oak St, Monaca, PA', price: 239000, beds: 3, baths: 2.5, image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c' },
-        // Add more listings as needed
+        { id: 4, title: 'Luxury Penthouse', address: '101 River Rd, Rochester, PA', price: 499000, beds: 4, baths: 3, image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3' },
+        { id: 5, title: 'Cozy Suburban Home', address: '202 Pine St, Ambridge, PA', price: 259000, beds: 3, baths: 2, image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d' }
     ];
 
     useEffect(() => {
@@ -83,17 +85,22 @@ export default function Listings() {
             className="bg-gray-50"
         >
             {/* Hero Section */}
-            <section className="bg-black text-white py-24">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <section className="relative pt-48 pb-24 md:pt-56 md:pb-32" style={{
+                backgroundImage: `url(${heroImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}>
+                <div className="absolute inset-0 bg-black opacity-50"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.h1
-                        className="text-4xl md:text-5xl font-bold mb-4"
+                        className="text-4xl md:text-5xl font-bold mb-4 text-white"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                     >
                         Discover Your Perfect Home
                     </motion.h1>
-                    <p className="text-xl mb-8">Browse our current listings and find your dream property</p>
+                    <p className="text-xl mb-8 text-white">Browse our current listings and find your dream property</p>
                     <AdvancedSearch onSearch={handleSearch} />
                 </div>
             </section>
@@ -118,7 +125,9 @@ export default function Listings() {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <img src={listing.image} alt={listing.title} className="w-full h-48 object-cover" />
+                                <div className="aspect-w-16 aspect-h-9 relative overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+                                    <img src={listing.image} alt={listing.title} className="absolute inset-0 w-full h-full object-cover" />
+                                </div>
                                 <div className="p-6">
                                     <h2 className="text-2xl font-semibold mb-2 text-gray-900">{listing.title}</h2>
                                     <p className="text-gray-600 mb-4">{listing.address}</p>

@@ -7,7 +7,7 @@ const Podcast = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex-grow"
+      className="flex-grow pt-16" // Added pt-16 for top padding
     >
       <div className="hero bg-gray-900 text-white py-32">
         <div className="container mx-auto px-4">

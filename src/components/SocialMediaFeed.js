@@ -4,7 +4,7 @@ import insta1 from '../images/insta_1.webp';
 import insta2 from '../images/insta_2.webp';
 
 const YouTubeEmbed = ({ videoId }) => (
-  <div className="aspect-w-16 aspect-h-9">
+  <div className="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105">
     <iframe
       src={`https://www.youtube.com/embed/${videoId}`}
       frameBorder="0"
@@ -16,18 +16,18 @@ const YouTubeEmbed = ({ videoId }) => (
 );
 
 const InstagramPost = ({ imageUrl, caption }) => (
-  <div className="rounded-lg overflow-hidden mt-4" style={{ border: '1px solid var(--subtle-border)' }}>
+  <div className="bg-white rounded-lg overflow-hidden shadow-lg mt-4 transition-all duration-300 hover:shadow-xl">
     <img src={imageUrl} alt="Instagram post" className="w-full h-64 object-cover" />
     <div className="p-4">
-      <p className="text-sm" style={{ color: 'var(--secondary-text)' }}>{caption}</p>
+      <p className="text-sm text-gray-600">{caption}</p>
     </div>
   </div>
 );
 
 const Tweet = ({ text, author, date }) => (
-  <div className="rounded-lg p-4 mt-4" style={{ border: '1px solid var(--subtle-border)' }}>
-    <p className="text-sm mb-2" style={{ color: 'var(--secondary-text)' }}>{text}</p>
-    <p className="text-xs" style={{ color: 'var(--secondary-text)', opacity: 0.7 }}>
+  <div className="bg-white rounded-lg p-4 mt-4 shadow-md hover:shadow-lg transition-all duration-300">
+    <p className="text-sm mb-2 text-gray-800">{text}</p>
+    <p className="text-xs text-gray-500">
       {author} • {date}
     </p>
   </div>
@@ -69,30 +69,30 @@ const SocialMediaFeed = () => {
   ];
 
   return (
-    <section className="py-16" style={{ backgroundColor: 'var(--secondary-bg)', color: 'var(--secondary-text)' }}>
+    <section className="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-xl font-semibold mb-4 flex items-center">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold mb-4 flex items-center text-gray-800">
               <FaYoutube className="text-red-600 mr-2" /> Latest Videos
             </h3>
             {youtubeVideos.map((video) => (
-              <div key={video.id} className="mb-4">
+              <div key={video.id} className="space-y-2">
                 <YouTubeEmbed videoId={video.id} />
-                <p className="mt-2 text-sm font-medium">{video.title}</p>
+                <p className="mt-2 text-sm font-medium text-gray-700">{video.title}</p>
               </div>
             ))}
           </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-4 flex items-center">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold mb-4 flex items-center text-gray-800">
               <FaInstagram className="text-pink-600 mr-2" /> Instagram Feed
             </h3>
             {instagramPosts.map((post) => (
               <InstagramPost key={post.id} imageUrl={post.imageUrl} caption={post.caption} />
             ))}
           </div>
-          <div className="mt-2">
-            <h3 className="text-xl font-semibold mb-4 flex items-center">
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold mb-4 flex items-center text-gray-800">
               <FaTwitter className="text-blue-400 mr-2" /> Latest Tweets
             </h3>
             {tweets.map((tweet) => (

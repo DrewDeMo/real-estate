@@ -87,7 +87,7 @@ export default function Home() {
                 className="bg-gray-50"
             >
                 {/* Hero Section */}
-                <section className="relative h-[calc(100vh-64px)] min-h-[500px] max-h-[800px] overflow-hidden bg-black">
+                <section className="relative h-[calc(100vh-64px)] min-h-[575px] max-h-[920px] overflow-hidden bg-black">
                     <Slider {...settings} className="h-full">
                         {sliderImages.map((img, index) => (
                             <div key={index} className="h-full">

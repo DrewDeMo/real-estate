@@ -1,6 +1,7 @@
 // src/components/SearchBar.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -18,14 +19,16 @@ const SearchBar = () => {
                 placeholder="Enter location, property type, or keywords..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-grow px-4 py-2 rounded-l-md border-2 border-blue-300 focus:outline-none focus:border-blue-500"
+                className="flex-grow px-6 py-3 rounded-l-full border-2 border-white bg-white bg-opacity-90 focus:outline-none focus:border-red-500 text-gray-800 text-lg"
             />
-            <button
+            <motion.button
                 type="submit"
-                className="bg-blue-500 text-white px-6 py-2 rounded-r-md hover:bg-blue-600 transition duration-300"
+                className="bg-red-600 text-white px-8 py-3 rounded-r-full hover:bg-red-700 transition duration-300 text-lg font-semibold"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
             >
                 Search
-            </button>
+            </motion.button>
         </form>
     );
 };

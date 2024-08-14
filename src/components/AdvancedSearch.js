@@ -1,5 +1,5 @@
-// src/components/AdvancedSearch.js
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const AdvancedSearch = ({ onSearch }) => {
     const [filters, setFilters] = useState({
@@ -20,18 +20,18 @@ const AdvancedSearch = ({ onSearch }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-gray-100 p-4 rounded-md mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <form onSubmit={handleSubmit} className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Price Range</label>
-                    <div className="mt-1 flex rounded-md shadow-sm">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Price Range</label>
+                    <div className="flex rounded-md shadow-sm">
                         <input
                             type="number"
                             name="priceMin"
                             placeholder="Min"
                             value={filters.priceMin}
                             onChange={handleChange}
-                            className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-l-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                            className="flex-1 min-w-0 block w-full px-4 py-3 rounded-l-md focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm border-gray-300"
                         />
                         <input
                             type="number"
@@ -39,17 +39,17 @@ const AdvancedSearch = ({ onSearch }) => {
                             placeholder="Max"
                             value={filters.priceMax}
                             onChange={handleChange}
-                            className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+                            className="flex-1 min-w-0 block w-full px-4 py-3 rounded-r-md focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm border-gray-300"
                         />
                     </div>
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Beds</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Beds</label>
                     <select
                         name="beds"
                         value={filters.beds}
                         onChange={handleChange}
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="block w-full py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm"
                     >
                         <option value="">Any</option>
                         <option value="1">1+</option>
@@ -59,12 +59,12 @@ const AdvancedSearch = ({ onSearch }) => {
                     </select>
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700">Baths</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Baths</label>
                     <select
                         name="baths"
                         value={filters.baths}
                         onChange={handleChange}
-                        className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="block w-full py-3 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 sm:text-sm"
                     >
                         <option value="">Any</option>
                         <option value="1">1+</option>
@@ -73,13 +73,15 @@ const AdvancedSearch = ({ onSearch }) => {
                     </select>
                 </div>
             </div>
-            <div className="mt-4">
-                <button
+            <div className="mt-6">
+                <motion.button
                     type="submit"
-                    className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+                    className="w-full bg-red-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-red-700 transition duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                 >
-                    Apply Filters
-                </button>
+                    Search Properties
+                </motion.button>
             </div>
         </form>
     );
