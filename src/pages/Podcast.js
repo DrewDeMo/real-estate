@@ -1,23 +1,66 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@mui/material/styles';
+import heroImage from '../images/hero/hero1.webp';
+
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  in: { opacity: 1, y: 0 },
+  out: { opacity: 0, y: -20 }
+};
+
+const pageTransition = {
+  type: 'tween',
+  ease: 'anticipate',
+  duration: 0.5
+};
 
 const Podcast = () => {
+  const theme = useTheme();
+
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="flex-grow pt-16" // Added pt-16 for top padding
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+      style={{ backgroundColor: theme.palette.background.default }}
     >
-      <div className="hero bg-gray-900 text-white py-32">
-        <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-bold mb-6">Mark Gulla Realty Podcast</h1>
-          <p className="text-xl mb-8">Your weekly dose of real estate insights, market trends, and expert interviews.</p>
+      {/* Hero Section */}
+      <section className="relative pt-36 pb-20 md:pt-44 md:pb-24" style={{
+        backgroundImage: `url(${heroImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
+        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold mb-4"
+            style={{ 
+              color: theme.palette.primary.contrastText,
+              textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
+            }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            Mark Gulla Realty Podcast
+          </motion.h1>
+          <p 
+            className="text-xl mb-6" 
+            style={{ 
+              color: theme.palette.primary.contrastText,
+              textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
+            }}
+          >
+            Your weekly dose of real estate insights, market trends, and expert interviews
+          </p>
           <a href="#latest-episodes" className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors">
             Listen Now
           </a>
         </div>
-      </div>
+      </section>
 
       <div className="container mx-auto px-4 py-16">
         <div id="latest-episodes" className="mb-16">

@@ -10,8 +10,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
     "framer-motion": "^11.3.24",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -2,6 +2,7 @@
 import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { ThemeProvider } from '@mui/material/styles';
 import Header from './components/Header';
 import PodcastHeader from './components/PodcastHeader';
 import Footer from './components/Footer';
@@ -12,6 +13,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import Podcast from './pages/Podcast';
+import theme from './styles/theme';
 import './styles/global.css';
 
 function App() {
@@ -19,24 +21,26 @@ function App() {
     const isPodcastPage = location.pathname === '/podcast';
 
     return (
-        <div className="flex flex-col min-h-screen overflow-x-hidden">
-            {isPodcastPage ? <PodcastHeader /> : <Header />}
+        <ThemeProvider theme={theme}>
+            <div className="flex flex-col min-h-screen overflow-x-hidden">
+                {isPodcastPage ? <PodcastHeader /> : <Header />}
 
-            <main className="flex-grow max-w-full">
-                <AnimatePresence mode="wait">
-                    <Routes location={location} key={location.pathname}>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/listings" element={<Listings />} />
-                        <Route path="/property/:id" element={<PropertyDetail />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/blog" element={<Blog />} />
-                        <Route path="/podcast" element={<Podcast />} />
-                    </Routes>
-                </AnimatePresence>
-            </main>
-            <Footer />
-        </div>
+                <main className="flex-grow max-w-full">
+                    <AnimatePresence mode="wait">
+                        <Routes location={location} key={location.pathname}>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/listings" element={<Listings />} />
+                            <Route path="/property/:id" element={<PropertyDetail />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/contact" element={<Contact />} />
+                            <Route path="/blog" element={<Blog />} />
+                            <Route path="/podcast" element={<Podcast />} />
+                        </Routes>
+                    </AnimatePresence>
+                </main>
+                <Footer />
+            </div>
+        </ThemeProvider>
     );
 }
 

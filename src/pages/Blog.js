@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useTheme } from '@mui/material/styles';
+import heroImage from '../images/hero/blog_hero.webp';
 
 const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -42,6 +44,8 @@ export const blogPosts = [
 ];
 
 export default function Blog() {
+    const theme = useTheme();
+
     return (
         <motion.div
             initial="initial"
@@ -49,15 +53,46 @@ export default function Blog() {
             exit="out"
             variants={pageVariants}
             transition={pageTransition}
-            className="bg-gray-50 min-h-screen pt-20"
+            style={{ backgroundColor: theme.palette.background.default }}
         >
+            {/* Hero Section */}
+            <section className="relative pt-36 pb-20 md:pt-44 md:pb-24" style={{
+                backgroundImage: `url(${heroImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}>
+                <div className="absolute inset-0 bg-black opacity-50"></div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <motion.h1
+                        className="text-4xl md:text-5xl font-bold mb-4"
+                        style={{
+                            color: theme.palette.primary.contrastText,
+                            textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
+                        }}
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        Our Blog
+                    </motion.h1>
+                    <p
+                        className="text-xl mb-6"
+                        style={{
+                            color: theme.palette.primary.contrastText,
+                            textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
+                        }}
+                    >
+                        Stay informed with the latest real estate insights and tips
+                    </p>
+                </div>
+            </section>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <h1 className="text-4xl font-bold text-gray-900 mb-8">Our Blog</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {blogPosts.map((post) => (
                         <motion.div
                             key={post.id}
-                            className="bg-white p-6 rounded-lg border border-gray-200"
+                            className="bg-white p-6 rounded-lg shadow-md"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
