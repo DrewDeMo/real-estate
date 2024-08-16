@@ -69,22 +69,22 @@ const SocialMediaFeed = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
+    <section className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold mb-4 flex items-center text-gray-800">
+            <h3 className="text-2xl font-bold mb-4 flex items-center text-white">
               <FaYoutube className="text-red-600 mr-2" /> Latest Videos
             </h3>
             {youtubeVideos.map((video) => (
               <div key={video.id} className="space-y-2">
                 <YouTubeEmbed videoId={video.id} />
-                <p className="mt-2 text-sm font-medium text-gray-700">{video.title}</p>
+                <p className="mt-2 text-sm font-medium text-gray-200">{video.title}</p>
               </div>
             ))}
           </div>
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold mb-4 flex items-center text-gray-800">
+            <h3 className="text-2xl font-bold mb-4 flex items-center text-white">
               <FaInstagram className="text-pink-600 mr-2" /> Instagram Feed
             </h3>
             {instagramPosts.map((post) => (
@@ -92,7 +92,7 @@ const SocialMediaFeed = () => {
             ))}
           </div>
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold mb-4 flex items-center text-gray-800">
+            <h3 className="text-2xl font-bold mb-4 flex items-center text-white">
               <FaTwitter className="text-blue-400 mr-2" /> Latest Tweets
             </h3>
             {tweets.map((tweet) => (

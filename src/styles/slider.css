@@ -1,7 +1,7 @@
 /* src/styles/slider.css */
 .home-slider {
-    margin-top: -1px; /* Remove any potential gap */
-    position: relative; /* Add this for the pseudo-element */
+    margin-top: -1px;
+    position: relative;
 }
 
 .home-slider::after {
@@ -18,7 +18,7 @@
 
 .home-slider .slick-dots {
     bottom: 20px;
-    z-index: 3; /* Ensure dots are above the new gradient */
+    z-index: 3;
 }
 
 .home-slider .slick-dots li {
@@ -29,12 +29,14 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.7);
     transition: all 0.3s ease;
 }
 
-.home-slider .slick-active .custom-dot {
-    background-color: white;
+.home-slider .custom-dot.active {
+    background-color: #FF0000;
+    border: none;
     transform: scale(1.2);
 }
 
@@ -54,8 +56,8 @@
 }
 
 .home-slider .slick-slide > div {
-    height: 60vh; /* Reduced from 70vh to make it shorter */
-    max-height: 500px; /* Reduced from 600px */
+    height: 60vh;
+    max-height: 500px;
 }
 
 .home-slider .slick-slide img {
@@ -63,5 +65,51 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.8); /* Slightly darken the image to match the bg better */
+    filter: brightness(0.8);
+}
+
+/* Logo Carousel Styles */
+.logo-carousel-container {
+    position: relative;
+    padding: 0 40px;
+}
+
+.logo-carousel .slick-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.logo-carousel .slick-slide img {
+    max-width: 100%;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.logo-carousel .custom-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.logo-carousel .prev-arrow {
+    left: 10px;
+}
+
+.logo-carousel .next-arrow {
+    right: 10px;
+}
+
+/* Remove default Slick arrow styles */
+.logo-carousel .slick-prev,
+.logo-carousel .slick-next {
+    display: none !important;
 }

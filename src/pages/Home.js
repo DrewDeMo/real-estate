@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import "../styles/slider.css";
-import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import SocialMediaFeed from '../components/SocialMediaFeed';
 import FeaturedListingsCarousel from '../components/FeaturedListingsCarousel';
 import LogoCarousel from '../components/LogoCarousel';
-import { motion } from 'framer-motion';
+import HeroSection from '../components/HeroSection';
+import DreamLivingSpaces from '../components/DreamLivingSpaces';
+import { motion, AnimatePresence } from 'framer-motion';
 import { blogPosts } from './Blog'; // Import blog posts from Blog page
-import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaChevronLeft, FaChevronRight, FaCalendarAlt, FaComment } from 'react-icons/fa';
+import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaCalendarAlt, FaComment } from 'react-icons/fa';
 import { useTheme } from '@mui/material/styles';
+
+// Import testimonial images
+import testimonialImage1 from '../images/testimonials/testimonial_user1.webp';
+import testimonialImage2 from '../images/testimonials/testimonial_user2.webp';
+import testimonialImage3 from '../images/testimonials/testimonial_user3.webp';
 
 const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -27,56 +29,6 @@ const pageTransition = {
 };
 
 const MotionLink = motion(Link);
-
-const CustomDot = ({ onClick, active }) => {
-    return (
-        <div
-            className={`custom-dot ${active ? 'active' : ''}`}
-            onClick={onClick}
-            style={{
-                width: '12px',
-                height: '12px',
-                margin: '0 5px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                backgroundColor: active ? '#FF0000' : 'transparent',
-                border: active ? 'none' : '2px solid rgba(255, 255, 255, 0.7)',
-            }}
-        />
-    );
-};
-
-const CustomArrow = ({ direction, onClick }) => {
-    return (
-        <div
-            className={`custom-arrow ${direction}`}
-            onClick={onClick}
-            style={{
-                position: 'absolute',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                [direction]: '20px',
-                zIndex: 1000,
-                cursor: 'pointer',
-                width: '50px',
-                height: '100px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'opacity 0.3s ease',
-                opacity: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                borderRadius: '5px',
-            }}
-        >
-            {direction === 'left' ?
-                <FaChevronLeft color="white" size={30} /> :
-                <FaChevronRight color="white" size={30} />
-            }
-        </div>
-    );
-};
 
 const SocialButton = ({ icon: Icon, link, label }) => {
     const theme = useTheme();
@@ -96,59 +48,41 @@ const SocialButton = ({ icon: Icon, link, label }) => {
     );
 };
 
+const testimonials = [
+    {
+        text: "I've dealt with Mark previously on three other purchases, so he was naturally the one I called when I noticed a new listing I wanted to see in person. He knew we weren't very serious buyers, but he took the time to show us the house anyway. It turns out we loved the house, and we made an offer that night. Then he went out of his way to ensure every detail of the purchase went off without issue. Mark knows the ins and outs of Beaver County real estate. When you work with him on a deal, you quickly learn that his true gift is handling the human side of the business and all of the complicated emotions that come with it.",
+        author: "Andrew S.",
+        role: "Satisfied Homeowner",
+        date: "2022",
+        image: testimonialImage1
+    },
+    {
+        text: "Mark went above and beyond. Very responsive, very professional and timely with communication. We put a plan into place and got it done. Mark goes above and beyond with his photography and videography to really make your property pop and stand out. Contact Mark if you like working with a professional for an outstanding buying/selling experience and want your home to stand out.",
+        author: "Jason C.",
+        role: "Satisfied Client",
+        date: "10/2/2022",
+        image: testimonialImage2
+    },
+    {
+        text: "Mark was very helpful in helping me find the right home for my needs. His negotiation skills were stellar. Because of his advice, I was able to put the best bid forward against 7 other bidders on the house.",
+        author: "Jim O.",
+        role: "Happy Homeowner",
+        date: "3/21/2021",
+        image: testimonialImage3
+    }
+];
+
 export default function Home() {
     const theme = useTheme();
-    const [showArrows, setShowArrows] = useState(false);
-    const [fadeTimeout, setFadeTimeout] = useState(null);
-
-    const handleMouseEnter = () => {
-        setShowArrows(true);
-        if (fadeTimeout) {
-            clearTimeout(fadeTimeout);
-        }
-    };
-
-    const handleMouseLeave = () => {
-        const timeout = setTimeout(() => {
-            setShowArrows(false);
-        }, 2000);  // 2 seconds delay before fading
-        setFadeTimeout(timeout);
-    };
+    const [currentTestimonial, setCurrentTestimonial] = useState(0);
 
     useEffect(() => {
-        return () => {
-            if (fadeTimeout) {
-                clearTimeout(fadeTimeout);
-            }
-        };
-    }, [fadeTimeout]);
+        const timer = setInterval(() => {
+            setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+        }, 10000); // Change testimonial every 10 seconds
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 8000,
-        pauseOnHover: true,
-        fade: true,
-        cssEase: 'linear',
-        nextArrow: <CustomArrow direction="right" />,
-        prevArrow: <CustomArrow direction="left" />,
-        appendDots: dots => (
-            <div style={{ position: 'absolute', bottom: '20px', width: '100%', textAlign: 'center', zIndex: 1000 }}>
-                <ul style={{ margin: '0', padding: '0', listStyle: 'none', display: 'inline-block' }}> {dots} </ul>
-            </div>
-        ),
-        customPaging: (i) => <CustomDot />,
-    };
-
-    const sliderImages = [
-        require('../images/slider-image-1.webp'),
-        require('../images/slider-image-2.webp'),
-        require('../images/slider-image-3.webp'),
-    ];
+        return () => clearInterval(timer);
+    }, []);
 
     return (
         <>
@@ -160,153 +94,8 @@ export default function Home() {
                 transition={pageTransition}
                 style={{ backgroundColor: theme.palette.background.default }}
             >
-                {/* Hero Section */}
-                <section 
-                    className="relative h-[calc(100vh-64px)] min-h-[690px] max-h-[1104px] overflow-hidden bg-black"
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                >
-                    <style>{`
-                        .custom-arrow {
-                            opacity: 0;
-                            transition: opacity 0.5s ease;
-                        }
-                        .custom-arrow:hover {
-                            opacity: 1 !important;
-                        }
-                        section:hover .custom-arrow {
-                            opacity: ${showArrows ? 1 : 0};
-                        }
-                    `}</style>
-                    <Slider {...settings} className="h-full">
-                        {sliderImages.map((img, index) => (
-                            <div key={index} className="h-full">
-                                <img
-                                    src={img}
-                                    alt={`House ${index + 1}`}
-                                    className="w-full h-full object-cover opacity-50"
-                                />
-                            </div>
-                        ))}
-                    </Slider>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center z-10 px-4">
-                        <motion.div
-                            className="text-center mb-8"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                        >
-                            <h1
-                                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white"
-                                style={{
-                                    textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
-                                }}
-                            >
-                                Sell Higher, Buy Smarter in Beaver County
-                            </h1>
-                            <p
-                                className="text-lg sm:text-xl md:text-2xl mb-8 font-light text-white"
-                                style={{
-                                    textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
-                                }}
-                            >
-                                Contact Now for a Free Home Valuation
-                            </p>
-                            <SearchBar />
-                        </motion.div>
-                        <div className="flex space-x-4">
-                            <MotionLink
-                                to="/explore"
-                                className="text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300"
-                                style={{ backgroundColor: theme.palette.primary.main }}
-                                whileHover={{ scale: 1.05, backgroundColor: theme.palette.primary.dark }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Start exploring
-                            </MotionLink>
-                            <MotionLink
-                                to="/post-property"
-                                className="px-6 py-3 rounded-full text-lg font-semibold transition duration-300"
-                                style={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
-                                whileHover={{ scale: 1.05, backgroundColor: theme.palette.background.paper }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Post a property
-                            </MotionLink>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Dream Living Spaces Section */}
-                <section className="py-24" style={{ backgroundColor: theme.palette.background.default }}>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                            <div className="space-y-6">
-                                <div className="flex items-center space-x-2">
-                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ color: theme.palette.secondary.main }}><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                    <span className="font-semibold" style={{ color: theme.palette.primary.main }}>RANKED #1 AGENT IN BEAVER COUNTY</span>
-                                </div>
-                                <h2 className="text-4xl font-bold" style={{ color: theme.palette.text.primary }}>Going Above and Beyond in Real Estate</h2>
-                                <p style={{ color: theme.palette.text.secondary }}>Mark Gulla is a second-generation REALTOR® who combines his love for the industry with his passion for helping people. With 9 years of experience, Mark ensures his clients are informed every step of the way.</p>
-                                <div className="space-y-4">
-                                    <div className="flex items-center space-x-4">
-                                        <div className="p-2 rounded-full" style={{ backgroundColor: theme.palette.primary.main }}>
-                                            <svg className="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                                        </div>
-                                        <span className="font-semibold" style={{ color: theme.palette.text.primary }}>Expert in Luxury Homes & First-Time Buyers</span>
-                                    </div>
-                                    <div className="flex items-center space-x-4">
-                                        <div className="p-2 rounded-full" style={{ backgroundColor: theme.palette.primary.main }}>
-                                            <svg className="w-6 h-6" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-                                        </div>
-                                        <span className="font-semibold" style={{ color: theme.palette.text.primary }}>Dedicated Support Throughout the Process</span>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-8">
-                                    <div className="text-center border-2 border-dashed rounded-lg p-4" style={{ borderColor: `${theme.palette.primary.main}40` }}>
-                                        <span className="text-4xl font-bold" style={{ color: theme.palette.primary.main }}>9</span>
-                                        <p style={{ color: theme.palette.text.secondary }}>Years of Experience</p>
-                                    </div>
-                                    <ul className="space-y-2" style={{ color: theme.palette.text.secondary }}>
-                                        <li className="flex items-center space-x-2">
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ color: theme.palette.primary.main }}><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                                            <span>Specializing in the Pittsburgh area market</span>
-                                        </li>
-                                        <li className="flex items-center space-x-2">
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ color: theme.palette.primary.main }}><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                                            <span>Expert in new construction and relocation</span>
-                                        </li>
-                                        <li className="flex items-center space-x-2">
-                                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" style={{ color: theme.palette.primary.main }}><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                                            <span>Committed to client education and satisfaction</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <MotionLink
-                                    to="/about"
-                                    className="inline-flex items-center space-x-2 font-semibold transition duration-300 px-6 py-2 rounded-full border-2"
-                                    style={{ color: theme.palette.secondary.main, borderColor: theme.palette.secondary.main }}
-                                    whileHover={{ backgroundColor: theme.palette.secondary.main, color: 'white' }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <span>Learn More About Mark</span>
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                                </MotionLink>
-                            </div>
-                            <div className="relative">
-                                <div className="aspect-w-4 aspect-h-5 rounded-lg overflow-hidden shadow-xl">
-                                    <img src={require('../images/Mark_Headshot.webp')} alt="Mark Gulla" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="absolute -bottom-6 -left-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center space-x-2" style={{ backgroundColor: theme.palette.background.paper }}>
-                                    <svg width="16" height="20" viewBox="0 0 12 15" fill={theme.palette.secondary.main} xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.00094 7.35034e-08C7.24403 -3.14963e-07 8.45644 0.386105 9.4706 1.10496C10.4848 1.82381 11.2506 2.83992 11.6623 4.01285C12.074 5.18579 12.1112 6.45765 11.7688 7.65265C11.4264 8.84766 10.7213 9.90682 9.75094 10.6838V14.1412C9.75093 14.2745 9.71863 14.4058 9.65681 14.5239C9.59498 14.642 9.50546 14.7433 9.39592 14.8193C9.28637 14.8952 9.16006 14.9434 9.0278 14.9599C8.89553 14.9764 8.76125 14.9605 8.63644 14.9138L6.00094 13.9268L3.36544 14.9152C3.24057 14.962 3.10622 14.9779 2.97389 14.9614C2.84157 14.9449 2.71521 14.8966 2.60565 14.8205C2.49609 14.7445 2.40659 14.6431 2.34481 14.5249C2.28303 14.4067 2.25082 14.2753 2.25094 14.142V10.6845C1.28025 9.90765 0.574861 8.84844 0.232278 7.65329C-0.110305 6.45815 -0.0731614 5.1861 0.338575 4.01298C0.750311 2.83986 1.5163 1.82361 2.53067 1.10472C3.54503 0.385834 4.75766 -0.00019448 6.00094 7.35034e-08ZM6.00094 1.5C4.80746 1.5 3.66287 1.97411 2.81896 2.81802C1.97505 3.66193 1.50094 4.80653 1.50094 6C1.50094 7.19347 1.97505 8.33807 2.81896 9.18198C3.66287 10.0259 4.80746 10.5 6.00094 10.5C7.19441 10.5 8.33901 10.0259 9.18292 9.18198C10.0268 8.33807 10.5009 7.19347 10.5009 6C10.5009 4.80653 10.0268 3.66193 9.18292 2.81802C8.33901 1.97411 7.19441 1.5 6.00094 1.5ZM6.00094 3C6.79659 3 7.55965 3.31607 8.12226 3.87868C8.68487 4.44129 9.00094 5.20435 9.00094 6C9.00094 6.79565 8.68487 7.55871 8.12226 8.12132C7.55965 8.68393 6.79659 9 6.00094 9C5.20529 9 4.44223 8.68393 3.87962 8.12132C3.31701 7.55871 3.00094 6.79565 3.00094 6C3.00094 5.20435 3.31701 4.44129 3.87962 3.87868C4.44223 3.31607 5.20529 3 6.00094 3Z"/>
-                                    </svg>
-                                    <span className="text-2xl font-bold" style={{ color: theme.palette.secondary.main }}>#1 in Beaver County</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <HeroSection />
+                <DreamLivingSpaces />
 
                 {/* Featured Listings Section */}
                 <section className="py-24" style={{ backgroundColor: theme.palette.background.paper }}>
@@ -395,21 +184,46 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* Get in Touch Section */}
-                <section className="py-24 text-white" style={{ backgroundColor: theme.palette.secondary.dark }}>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="text-center">
-                            <h2 className="text-4xl font-bold mb-8">Get in Touch</h2>
-                            <p className="text-xl mb-12">Ready to find your dream home? Contact us today!</p>
-                            <MotionLink
-                                to="/contact"
-                                className="text-white px-8 py-4 rounded-full text-lg font-bold transition duration-300 inline-block"
-                                style={{ backgroundColor: theme.palette.primary.main }}
-                                whileHover={{ scale: 1.05, backgroundColor: theme.palette.primary.dark }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Contact Us
-                            </MotionLink>
+                {/* Testimonials Section */}
+                <section className="py-24" style={{ backgroundColor: theme.palette.background.default }}>
+                    <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+                        <div className="text-center mb-16">
+                            <h2 className="text-4xl font-bold" style={{ color: theme.palette.text.primary }}>What Our Clients Say</h2>
+                            <p className="mt-4 text-xl" style={{ color: theme.palette.text.secondary }}>Real experiences from satisfied homeowners</p>
+                        </div>
+                        <div className="relative h-[400px]">
+                            <AnimatePresence>
+                                <motion.figure
+                                    key={currentTestimonial}
+                                    className="max-w-screen-md mx-auto absolute inset-0"
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -20 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 300,
+                                        damping: 30,
+                                        duration: 0.5,
+                                        ease: [0.43, 0.13, 0.23, 0.96] // Cubic bezier
+                                    }}
+                                >
+                                    <svg className="h-12 mx-auto mb-3" style={{ color: theme.palette.primary.main }} viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
+                                    </svg> 
+                                    <blockquote>
+                                        <p className="text-2xl font-medium" style={{ color: theme.palette.text.primary }}>
+                                            "{testimonials[currentTestimonial].text}"
+                                        </p>
+                                    </blockquote>
+                                    <figcaption className="flex items-center justify-center mt-6 space-x-3">
+                                        <img className="w-12 h-12 rounded-full" src={testimonials[currentTestimonial].image} alt={`${testimonials[currentTestimonial].author} profile picture`} />
+                                        <div className="flex items-center divide-x-2" style={{ divideColor: theme.palette.divider }}>
+                                            <div className="pr-3 font-medium" style={{ color: theme.palette.text.primary }}>{testimonials[currentTestimonial].author}</div>
+                                            <div className="pl-3 text-sm font-light" style={{ color: theme.palette.text.secondary }}>{testimonials[currentTestimonial].role}</div>
+                                        </div>
+                                    </figcaption>
+                                </motion.figure>
+                            </AnimatePresence>
                         </div>
                     </div>
                 </section>
