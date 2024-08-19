@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import heroImage from '../images/hero/blog_hero.webp';
 import markPhoto from '../images/headshots/MarkPhoto3.webp';
 import airqualityBlog from '../images/blog/airquality_blog.webp';
@@ -92,6 +93,7 @@ With a few little tweaks, you can create a whole new ambiance the next time you 
 
 export default function Blog() {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <motion.div
@@ -103,7 +105,7 @@ export default function Blog() {
             style={{ backgroundColor: theme.palette.background.default }}
         >
             {/* Hero Section */}
-            <section className="relative pt-36 pb-20 md:pt-44 md:pb-24" style={{
+            <section className="relative pt-32 pb-16 md:pt-44 md:pb-20" style={{
                 backgroundImage: `url(${heroImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -111,7 +113,7 @@ export default function Blog() {
                 <div className="absolute inset-0 bg-black opacity-50"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.h1
-                        className="text-4xl md:text-5xl font-bold mb-4"
+                        className="text-3xl md:text-5xl font-bold mb-4"
                         style={{
                             color: theme.palette.primary.contrastText,
                             textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
@@ -123,7 +125,7 @@ export default function Blog() {
                         Our Blog
                     </motion.h1>
                     <p
-                        className="text-xl mb-6"
+                        className="text-lg md:text-xl mb-6"
                         style={{
                             color: theme.palette.primary.contrastText,
                             textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
@@ -137,8 +139,8 @@ export default function Blog() {
             {/* Blog Section */}
             <section className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
                 <div className="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
-                    <h2 className="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold" style={{ color: theme.palette.text.primary }}>Latest Posts</h2>
-                    <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">Explore our latest articles for valuable insights and tips on real estate and home improvement.</p>
+                    <h2 className="mb-4 text-2xl md:text-3xl lg:text-4xl tracking-tight font-extrabold" style={{ color: theme.palette.text.primary }}>Latest Posts</h2>
+                    <p className="font-light text-gray-500 text-sm md:text-base lg:text-lg dark:text-gray-400">Explore our latest articles for valuable insights and tips on real estate and home improvement.</p>
                 </div> 
                 <div className="grid gap-8 lg:grid-cols-2">
                     {blogPosts.map((post) => (
@@ -150,22 +152,22 @@ export default function Blog() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
-                            <div className="p-6">
-                                <div className="flex justify-between items-center mb-5 text-gray-500">
-                                    <span className="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded" style={{ backgroundColor: theme.palette.primary.light, color: theme.palette.primary.contrastText }}>
+                            <img src={post.image} alt={post.title} className="w-full h-48 md:h-56 lg:h-64 object-cover" />
+                            <div className="p-4 md:p-6">
+                                <div className="flex justify-between items-center mb-3 md:mb-5 text-gray-500 flex-wrap">
+                                    <span className="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded mb-2 md:mb-0 mr-2" style={{ backgroundColor: theme.palette.primary.light, color: theme.palette.primary.contrastText }}>
                                         {post.category}
                                     </span>
-                                    <span className="text-sm">{post.date}</span>
+                                    <span className="text-xs md:text-sm">{post.date}</span>
                                 </div>
-                                <h2 className="mb-2 text-2xl font-bold tracking-tight" style={{ color: theme.palette.text.primary }}>
+                                <h2 className="mb-2 text-xl md:text-2xl font-bold tracking-tight" style={{ color: theme.palette.text.primary }}>
                                     <Link to={`/blog/${post.id}`}>{post.title}</Link>
                                 </h2>
-                                <p className="mb-5 font-light" style={{ color: theme.palette.text.secondary }}>{post.excerpt}</p>
-                                <div className="flex justify-between items-center">
-                                    <div className="flex items-center space-x-4">
+                                <p className="mb-3 md:mb-5 font-light text-sm md:text-base" style={{ color: theme.palette.text.secondary }}>{post.excerpt}</p>
+                                <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+                                    <div className="flex items-center space-x-4 mb-3 md:mb-0">
                                         <img className="w-7 h-7 rounded-full" src={post.authorImage} alt={`${post.author} avatar`} />
-                                        <span className="font-medium" style={{ color: theme.palette.text.primary }}>
+                                        <span className="font-medium text-sm md:text-base" style={{ color: theme.palette.text.primary }}>
                                             {post.author}
                                         </span>
                                     </div>
@@ -175,13 +177,14 @@ export default function Blog() {
                                             color: theme.palette.secondary.main,
                                             border: `2px solid ${theme.palette.secondary.main}`,
                                             backgroundColor: 'transparent',
-                                            padding: '8px 16px',
+                                            padding: '6px 12px',
                                             borderRadius: '9999px',
-                                            fontSize: '0.875rem',
+                                            fontSize: '0.75rem',
                                             fontWeight: 'bold',
                                             display: 'inline-block',
                                             textDecoration: 'none',
                                             transition: 'all 0.3s ease',
+                                            textAlign: 'center',
                                         }}
                                         whileHover={{
                                             backgroundColor: theme.palette.secondary.main,
@@ -189,7 +192,7 @@ export default function Blog() {
                                         }}
                                     >
                                         Read More
-                                        <svg className="inline-block w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                        <svg className="inline-block w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                                     </MotionLink>
                                 </div>
                             </div>

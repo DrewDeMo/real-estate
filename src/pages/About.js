@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import heroImage from '../images/hero/about_hero.webp';
 import markPhoto from '../images/headshots/MarkPhoto2.webp';
 import { FaAward, FaGraduationCap, FaHome, FaChartLine, FaUserTie, FaTrophy, FaMedal, FaCrown, FaStar, FaChartBar, FaUserGraduate, FaCalendarCheck } from 'react-icons/fa';
@@ -19,18 +20,19 @@ const pageTransition = {
 
 const Section = ({ title, children, icon: Icon }) => {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const lighterPrimaryColor = theme.palette.augmentColor({
         color: theme.palette.primary,
         lightness: 0.7,
     }).main;
     return (
         <motion.div
-            className="mb-12"
+            className="mb-8 sm:mb-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <h2 className="text-3xl font-bold mb-6 flex items-center" style={{ color: theme.palette.text.primary }}>
+            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold mb-4 sm:mb-6 flex items-center`} style={{ color: theme.palette.text.primary }}>
                 {Icon && <Icon className="mr-3 text-2xl" style={{ color: lighterPrimaryColor }} />}
                 {title}
             </h2>
@@ -70,14 +72,15 @@ const StatItem = ({ label, value }) => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
         >
-            <div className="text-4xl font-bold mb-2" style={{ color: theme.palette.primary.main }}>{value}</div>
-            <div className="text-sm" style={{ color: theme.palette.text.secondary }}>{label}</div>
+            <div className="text-3xl sm:text-4xl font-bold mb-2" style={{ color: theme.palette.primary.main }}>{value}</div>
+            <div className="text-xs sm:text-sm" style={{ color: theme.palette.text.secondary }}>{label}</div>
         </motion.div>
     );
 };
 
 export default function About() {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
         <motion.div
@@ -89,7 +92,7 @@ export default function About() {
             style={{ backgroundColor: theme.palette.background.default }}
         >
             {/* Hero Section */}
-            <section className="relative pt-36 pb-20 md:pt-44 md:pb-24" style={{
+            <section className="relative py-20 sm:py-32" style={{
                 backgroundImage: `url(${heroImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -97,7 +100,7 @@ export default function About() {
                 <div className="absolute inset-0 bg-black opacity-50"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.h1
-                        className="text-4xl md:text-5xl font-bold mb-4"
+                        className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 pt-16 sm:pt-0"
                         style={{
                             color: theme.palette.primary.contrastText,
                             textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
@@ -109,7 +112,7 @@ export default function About() {
                         About Mark Gulla
                     </motion.h1>
                     <p
-                        className="text-xl mb-6"
+                        className="text-lg sm:text-xl mb-6"
                         style={{
                             color: theme.palette.primary.contrastText,
                             textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
@@ -120,8 +123,8 @@ export default function About() {
                 </div>
             </section>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 mb-12 sm:mb-16">
                     <div className="md:col-span-1">
                         <motion.img
                             src={markPhoto}
@@ -134,13 +137,13 @@ export default function About() {
                     </div>
                     <div className="md:col-span-2">
                         <Section title="About Mark" icon={FaUserTie}>
-                            <p className="text-gray-600 mb-4 leading-relaxed">
+                            <p className="text-sm sm:text-base text-gray-600 mb-4 leading-relaxed">
                                 As a second-generation REALTOR®, Mark Gulla combines his love for the industry with his desire for helping people. Born and raised in Pittsburgh, Mark has extensive knowledge of the different communities and neighborhoods across Western Pennsylvania. He serves the entire Pittsburgh region including Beaver County, Butler County and Allegheny County, specializing in home buying and selling, investment properties, luxury homes, and multi-residential properties.
                             </p>
-                            <p className="text-gray-600 mb-4 leading-relaxed">
+                            <p className="text-sm sm:text-base text-gray-600 mb-4 leading-relaxed">
                                 Mark's exposure to the real estate industry from an early age, coupled with his sincere interest and experience, has developed his keen aptitude for the business. He considers educating his clients an important part of his role as a FULL TIME REALTOR®.
                             </p>
-                            <p className="text-gray-600 mb-4 leading-relaxed">
+                            <p className="text-sm sm:text-base text-gray-600 mb-4 leading-relaxed">
                                 Licensed since 2015, Mark ensures his clients are informed every step of the way, whether they're buying or selling. He keeps his finger on the pulse of the latest trends and movements of the Pittsburgh real estate market, offering top-notch guidance from start to finish. Mark's ultimate goal is to end each transaction with a happy client who becomes a client for life.
                             </p>
                             <motion.div
@@ -158,13 +161,13 @@ export default function About() {
                 </div>
 
                 <Section title="Education" icon={FaGraduationCap}>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                         Bachelor of Science – Business Management, Robert Morris University
                     </p>
                 </Section>
 
                 <Section title="Awards and Achievements" icon={FaAward}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <AwardItem title="#1 Agent in Beaver County, BCAR" year="2022 & 2023" icon={FaTrophy} />
                         <AwardItem title="Individual Office Leader" year="2022 & 2023" icon={FaCrown} />
                         <AwardItem title="Platinum Club" year="2019 – 2022" icon={FaMedal} />
@@ -177,22 +180,22 @@ export default function About() {
                 </Section>
 
                 <Section title="The Expert by Your Side" icon={FaHome}>
-                    <div className="bg-gray-50 p-6 rounded-lg mb-6">
-                        <h3 className="text-xl font-semibold mb-3" style={{ color: theme.palette.text.primary }}>When you're selling:</h3>
-                        <p className="text-gray-600 leading-relaxed">
+                    <div className="bg-gray-50 p-4 sm:p-6 rounded-lg mb-4 sm:mb-6">
+                        <h3 className="text-lg sm:text-xl font-semibold mb-3" style={{ color: theme.palette.text.primary }}>When you're selling:</h3>
+                        <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                             Mark's track record of success means he knows how to showcase your house effectively, market and promote it so that it attracts qualified buyers and get it SOLD for the highest price. Throughout the process, he's with you every step of the way, making sure your questions are answered, all the details are handled expertly, and the entire experience is a positive one.
                         </p>
                     </div>
-                    <div className="bg-gray-50 p-6 rounded-lg">
-                        <h3 className="text-xl font-semibold mb-3" style={{ color: theme.palette.text.primary }}>When you're buying:</h3>
-                        <p className="text-gray-600 leading-relaxed">
+                    <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
+                        <h3 className="text-lg sm:text-xl font-semibold mb-3" style={{ color: theme.palette.text.primary }}>When you're buying:</h3>
+                        <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                             Mark's expertise in the local market means he can introduce you to homes that meet your criteria and notify you immediately of brand new listings. He can advise you on what to look for when viewing a home, so you don't make a catastrophic mistake, and arm you with in-depth details on every property you see. When you find a home you fall in love with, Mark knows how to negotiate effectively so you get that property, at the best possible price.
                         </p>
                     </div>
                 </Section>
 
                 <Section title="2022 Career Stats" icon={FaChartLine}>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                         <StatItem label="Houses Sold" value="100+" />
                         <StatItem label="Client Satisfaction" value="99%" />
                         <StatItem label="Days on Market" value="14" />
@@ -201,7 +204,7 @@ export default function About() {
                 </Section>
 
                 <Section title="Send Mark a Message">
-                    <form action="#" className="space-y-6">
+                    <form action="#" className="space-y-4 sm:space-y-6">
                         <div>
                             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">Your email</label>
                             <input type="email" id="email" className="shadow-sm bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" placeholder="name@example.com" required />
@@ -212,7 +215,7 @@ export default function About() {
                         </div>
                         <div className="sm:col-span-2">
                             <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900">Your message</label>
-                            <textarea id="message" rows="6" className="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Leave a comment..."></textarea>
+                            <textarea id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500" placeholder="Leave a comment..."></textarea>
                         </div>
                         <button type="submit" className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg w-full sm:w-auto hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300" style={{ backgroundColor: theme.palette.primary.main }}>Send message</button>
                     </form>

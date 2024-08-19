@@ -6,7 +6,7 @@ import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 import PropertyContactForm from '../components/PropertyContactForm';
 import { useTheme } from '@mui/material/styles';
-import { Typography, Paper, Grid, Box, Chip } from '@mui/material';
+import { Typography, Paper, Grid, Box, Chip, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/system';
 import { FaBed, FaBath, FaRuler } from 'react-icons/fa';
 
@@ -25,7 +25,10 @@ const pageTransition = {
 const MotionLink = motion(Link);
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(3),
+    },
     marginBottom: theme.spacing(3),
     backgroundColor: theme.palette.background.paper,
     borderRadius: theme.shape.borderRadius,
@@ -45,6 +48,7 @@ const FeatureChip = styled(Chip)(({ theme }) => ({
 const PropertyDetail = () => {
     const { id } = useParams();
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     // Simulated property data
     const property = {
@@ -82,7 +86,7 @@ const PropertyDetail = () => {
             transition={pageTransition}
             style={{ paddingTop: theme.spacing(10), backgroundColor: theme.palette.background.default }}
         >
-            <Box maxWidth="lg" margin="auto" padding={3}>
+            <Box maxWidth="lg" margin="auto" padding={2} paddingTop={4}>
                 <MotionLink
                     to="/listings"
                     style={{ 
@@ -90,13 +94,14 @@ const PropertyDetail = () => {
                         marginBottom: theme.spacing(2), 
                         display: 'inline-block',
                         textDecoration: 'none',
+                        fontSize: isMobile ? '0.9rem' : '1rem',
                     }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                 >
                     &larr; Back to Listings
                 </MotionLink>
-                <Grid container spacing={4}>
+                <Grid container spacing={3}>
                     <Grid item xs={12} md={7}>
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
@@ -107,16 +112,21 @@ const PropertyDetail = () => {
                                 <ImageGallery 
                                     items={property.images} 
                                     showPlayButton={false} 
-                                    showFullscreenButton={false}
-                                    showNav={false}
+                                    showFullscreenButton={!isMobile}
+                                    showNav={!isMobile}
                                     showBullets={true}
+                                    showThumbnails={!isMobile}
                                 />
                             </StyledPaper>
                             <StyledPaper>
-                                <Typography variant="h6" gutterBottom>Features:</Typography>
+                                <Typography variant={isMobile ? "subtitle1" : "h6"} gutterBottom>Features:</Typography>
                                 <Box display="flex" flexWrap="wrap">
                                     {property.features.map((feature, index) => (
-                                        <FeatureChip key={index} label={feature} />
+                                        <FeatureChip 
+                                            key={index} 
+                                            label={feature} 
+                                            size={isMobile ? "small" : "medium"}
+                                        />
                                     ))}
                                 </Box>
                             </StyledPaper>
@@ -129,27 +139,27 @@ const PropertyDetail = () => {
                             transition={{ delay: 0.2 }}
                         >
                             <StyledPaper>
-                                <Typography variant="h4" gutterBottom style={{ color: theme.palette.primary.main }}>
+                                <Typography variant={isMobile ? "h5" : "h4"} gutterBottom style={{ color: theme.palette.primary.main }}>
                                     {property.title}
                                 </Typography>
-                                <Typography variant="subtitle1" gutterBottom style={{ color: theme.palette.text.secondary }}>
+                                <Typography variant={isMobile ? "body2" : "subtitle1"} gutterBottom style={{ color: theme.palette.text.secondary }}>
                                     {property.address}
                                 </Typography>
-                                <Typography variant="h5" gutterBottom style={{ color: theme.palette.secondary.main, fontWeight: 'bold' }}>
+                                <Typography variant={isMobile ? "h6" : "h5"} gutterBottom style={{ color: theme.palette.secondary.main, fontWeight: 'bold' }}>
                                     ${property.price.toLocaleString()}
                                 </Typography>
                                 <Box display="flex" justifyContent="space-between" marginBottom={2}>
-                                    <Typography variant="body1" style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Typography variant="body2" style={{ display: 'flex', alignItems: 'center' }}>
                                         <FaBed style={{ marginRight: '0.5rem' }} /> {property.beds} beds
                                     </Typography>
-                                    <Typography variant="body1" style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Typography variant="body2" style={{ display: 'flex', alignItems: 'center' }}>
                                         <FaBath style={{ marginRight: '0.5rem' }} /> {property.baths} baths
                                     </Typography>
-                                    <Typography variant="body1" style={{ display: 'flex', alignItems: 'center' }}>
+                                    <Typography variant="body2" style={{ display: 'flex', alignItems: 'center' }}>
                                         <FaRuler style={{ marginRight: '0.5rem' }} /> {property.sqft} sqft
                                     </Typography>
                                 </Box>
-                                <Typography variant="body1" paragraph>
+                                <Typography variant="body2" paragraph>
                                     {property.description}
                                 </Typography>
                             </StyledPaper>

@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../styles/slider.css";
 import SearchBar from '../components/SearchBar';
+import SellHomeModal from '../components/SellHomeModal';
 
 // Import testimonial images
 import testimonialImage1 from '../images/testimonials/testimonial_user1.webp';
@@ -76,193 +77,6 @@ const testimonials = [
         image: testimonialImage3
     }
 ];
-
-const SellPropertyModule = ({ isOpen, onClose }) => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const [formData, setFormData] = useState({
-        address: '',
-        zipCode: '',
-        beds: 1,
-        baths: 1,
-        propertyType: '',
-        name: '',
-        email: '',
-        phoneNumber: '',
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle form submission here
-        console.log(formData);
-        onClose();
-    };
-
-    return (
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
-                >
-                    <motion.div
-                        initial={{ scale: 0.9, y: 20 }}
-                        animate={{ scale: 1, y: 0 }}
-                        exit={{ scale: 0.9, y: 20 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="bg-white rounded-lg w-full max-w-md relative overflow-y-auto max-h-[90vh]"
-                        style={{ backgroundColor: theme.palette.background.paper }}
-                    >
-                        <Box sx={{ p: 3 }}>
-                            <IconButton
-                                onClick={onClose}
-                                sx={{
-                                    position: 'absolute',
-                                    right: 8,
-                                    top: 8,
-                                    color: theme.palette.grey[500],
-                                }}
-                            >
-                                <FaTimes />
-                            </IconButton>
-                            <h2 className="text-2xl font-bold mb-4" style={{ color: theme.palette.text.primary }}>
-                                Sell My House!
-                            </h2>
-                            <form onSubmit={handleSubmit}>
-                                <TextField
-                                    fullWidth
-                                    label="Address"
-                                    name="address"
-                                    value={formData.address}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Zip Code"
-                                    name="zipCode"
-                                    value={formData.zipCode}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                    variant="outlined"
-                                />
-                                <Box sx={{ display: 'flex', gap: 2, my: 2, flexDirection: isMobile ? 'column' : 'row' }}>
-                                    <FormControl fullWidth variant="outlined">
-                                        <InputLabel>Beds</InputLabel>
-                                        <Select
-                                            value={formData.beds}
-                                            label="Beds"
-                                            name="beds"
-                                            onChange={handleChange}
-                                        >
-                                            {[1, 2, 3, 4, 5].map((num) => (
-                                                <MenuItem key={num} value={num}>{num}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                    <FormControl fullWidth variant="outlined">
-                                        <InputLabel>Baths</InputLabel>
-                                        <Select
-                                            value={formData.baths}
-                                            label="Baths"
-                                            name="baths"
-                                            onChange={handleChange}
-                                        >
-                                            {[1, 2, 3, 4, 5].map((num) => (
-                                                <MenuItem key={num} value={num}>{num}</MenuItem>
-                                            ))}
-                                        </Select>
-                                    </FormControl>
-                                </Box>
-                                <FormControl fullWidth margin="normal" variant="outlined">
-                                    <InputLabel>Property Type</InputLabel>
-                                    <Select
-                                        value={formData.propertyType}
-                                        label="Property Type"
-                                        name="propertyType"
-                                        onChange={handleChange}
-                                        required
-                                    >
-                                        <MenuItem value="Single Family House">Single Family House</MenuItem>
-                                        <MenuItem value="Condo">Condo</MenuItem>
-                                        <MenuItem value="Townhouse">Townhouse</MenuItem>
-                                        <MenuItem value="Multi-Family">Multi-Family</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <TextField
-                                    fullWidth
-                                    label="Name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Email"
-                                    name="email"
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Phone Number"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
-                                    onChange={handleChange}
-                                    margin="normal"
-                                    required
-                                    variant="outlined"
-                                />
-                                <Button
-                                    type="submit"
-                                    variant="outlined"
-                                    fullWidth
-                                    size="large"
-                                    sx={{
-                                        mt: 3,
-                                        mb: 2,
-                                        color: theme.palette.primary.main,
-                                        borderColor: theme.palette.primary.main,
-                                        '&:hover': {
-                                            backgroundColor: theme.palette.primary.main,
-                                            color: theme.palette.primary.contrastText,
-                                        },
-                                        textTransform: 'none',
-                                        fontSize: '1rem',
-                                        fontWeight: 'normal',
-                                    }}
-                                >
-                                    Send Request
-                                </Button>
-                            </form>
-                        </Box>
-                    </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
-};
 
 const CustomDot = ({ onClick, active }) => {
     return (
@@ -444,15 +258,17 @@ const HeroSection = ({ onSellProperty }) => {
                     >
                         View Properties
                     </MotionLink>
-                    <motion.button
-                        onClick={onSellProperty}
-                        className="px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-lg font-semibold transition duration-300"
-                        style={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
-                        whileHover={{ scale: 1.05, backgroundColor: theme.palette.background.paper }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        Sell a Property
-                    </motion.button>
+                    {!isMobile && (
+                        <motion.button
+                            onClick={onSellProperty}
+                            className="px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-lg font-semibold transition duration-300"
+                            style={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
+                            whileHover={{ scale: 1.05, backgroundColor: theme.palette.background.paper }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            Sell a Property
+                        </motion.button>
+                    )}
                 </div>
             </div>
         </section>
@@ -628,7 +444,7 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <SellPropertyModule isOpen={isSellPropertyOpen} onClose={() => setIsSellPropertyOpen(false)} />
+            <SellHomeModal isOpen={isSellPropertyOpen} onClose={() => setIsSellPropertyOpen(false)} />
         </motion.div>
     );
 }

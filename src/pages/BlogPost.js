@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import { blogPosts } from './Blog';
 
 const pageVariants = {
@@ -23,7 +24,7 @@ const GhostButton = ({ to, children }) => {
   return (
     <MotionLink
       to={to}
-      className="inline-block px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200"
+      className="inline-block px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200"
       style={{
         color: theme.palette.secondary.main,
         border: `2px solid ${theme.palette.secondary.main}`,
@@ -42,6 +43,7 @@ const GhostButton = ({ to, children }) => {
 export default function BlogPost() {
   const { id } = useParams();
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const post = blogPosts.find((post) => post.id === parseInt(id));
 
   if (!post) {
@@ -58,21 +60,21 @@ export default function BlogPost() {
       style={{ backgroundColor: theme.palette.background.default }}
     >
       {/* Hero Section */}
-      <section className="relative h-96" style={{
+      <section className="relative py-20 sm:py-32" style={{
         backgroundImage: `url(${post.image})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="relative z-10 container mx-auto px-4 flex items-center justify-center h-full">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 sm:mb-4" style={{
               color: theme.palette.primary.contrastText,
               textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
             }}>
               {post.title}
             </h1>
-            <p className="text-xl mb-6" style={{
+            <p className="text-lg sm:text-xl mb-4 sm:mb-6" style={{
               color: theme.palette.primary.contrastText,
               textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
             }}>
@@ -85,7 +87,7 @@ export default function BlogPost() {
       {/* Navigation Menu */}
       <nav className="bg-gray-100 py-4" style={{ backgroundColor: theme.palette.background.paper }}>
         <div className="container mx-auto px-4">
-          <ul className="flex justify-center space-x-6">
+          <ul className="flex flex-wrap justify-center gap-4">
             <li><GhostButton to="/blog">Back to Blog</GhostButton></li>
             <li><GhostButton to={`/blog/${post.id > 1 ? post.id - 1 : blogPosts.length}`}>Previous Post</GhostButton></li>
             <li><GhostButton to={`/blog/${post.id < blogPosts.length ? post.id + 1 : 1}`}>Next Post</GhostButton></li>
@@ -94,16 +96,16 @@ export default function BlogPost() {
       </nav>
 
       {/* Blog Content */}
-      <article className="container mx-auto px-4 py-12">
+      <article className="container mx-auto px-4 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="flex items-center mb-8">
-            <img className="w-12 h-12 rounded-full mr-4" src={post.authorImage} alt={`${post.author} avatar`} />
+          <div className="flex items-center mb-6 sm:mb-8">
+            <img className="w-10 h-10 sm:w-12 sm:h-12 rounded-full mr-3 sm:mr-4" src={post.authorImage} alt={`${post.author} avatar`} />
             <div>
-              <h2 className="text-xl font-semibold" style={{ color: theme.palette.text.primary }}>{post.author}</h2>
-              <p className="text-sm" style={{ color: theme.palette.text.secondary }}>{post.date}</p>
+              <h2 className="text-lg sm:text-xl font-semibold" style={{ color: theme.palette.text.primary }}>{post.author}</h2>
+              <p className="text-xs sm:text-sm" style={{ color: theme.palette.text.secondary }}>{post.date}</p>
             </div>
           </div>
-          <div className="prose prose-lg" style={{ color: theme.palette.text.primary }}>
+          <div className="prose prose-sm sm:prose sm:prose-lg" style={{ color: theme.palette.text.primary }}>
             {post.content.split('\n\n').map((paragraph, index) => (
               <p key={index} className="mb-4">{paragraph}</p>
             ))}
@@ -112,10 +114,10 @@ export default function BlogPost() {
       </article>
 
       {/* Related Posts */}
-      <section className="bg-gray-100 py-12" style={{ backgroundColor: theme.palette.background.paper }}>
+      <section className="bg-gray-100 py-8 sm:py-12" style={{ backgroundColor: theme.palette.background.paper }}>
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center" style={{ color: theme.palette.text.primary }}>Related Posts</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center" style={{ color: theme.palette.text.primary }}>Related Posts</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {blogPosts.filter(relatedPost => relatedPost.id !== post.id).slice(0, 3).map((relatedPost) => (
               <MotionLink
                 key={relatedPost.id}
@@ -127,11 +129,11 @@ export default function BlogPost() {
                 <img
                   src={relatedPost.image}
                   alt={relatedPost.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-40 sm:h-48 object-cover"
                 />
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2" style={{ color: theme.palette.text.primary }}>{relatedPost.title}</h3>
-                  <p className="text-sm mb-4" style={{ color: theme.palette.text.secondary }}>{relatedPost.excerpt}</p>
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2" style={{ color: theme.palette.text.primary }}>{relatedPost.title}</h3>
+                  <p className="text-xs sm:text-sm mb-4" style={{ color: theme.palette.text.secondary }}>{relatedPost.excerpt}</p>
                   <GhostButton to={`/blog/${relatedPost.id}`}>Read More</GhostButton>
                 </div>
               </MotionLink>

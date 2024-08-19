@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import heroImage from '../images/hero/hero1.webp';
 
 const pageVariants = {
@@ -22,6 +23,7 @@ const formItemVariants = {
 
 export default function Contact() {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -50,7 +52,7 @@ export default function Contact() {
             className="bg-white dark:bg-gray-900"
         >
             {/* Hero Section with Contact Form and Information */}
-            <section className="relative pt-36 pb-20 md:pt-44 md:pb-24" style={{
+            <section className="relative py-20 sm:py-32" style={{
                 backgroundImage: `url(${heroImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
@@ -58,7 +60,7 @@ export default function Contact() {
                 <div className="absolute inset-0 bg-black opacity-50"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.h1
-                        className="text-4xl md:text-5xl font-bold mb-4 text-white"
+                        className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white pt-16 sm:pt-0"
                         style={{
                             textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
                         }}
@@ -69,7 +71,7 @@ export default function Contact() {
                         Contact Us
                     </motion.h1>
                     <p
-                        className="text-xl mb-6 text-white"
+                        className="text-lg sm:text-xl mb-6 text-white"
                         style={{
                             textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
                         }}
@@ -89,7 +91,7 @@ export default function Contact() {
                                     }
                                 }
                             }}
-                            className="glassmorphism p-8 rounded-xl shadow-2xl"
+                            className="glassmorphism p-6 sm:p-8 rounded-xl shadow-2xl"
                             style={{
                                 background: 'rgba(255, 255, 255, 0.1)',
                                 backdropFilter: 'blur(10px)',
@@ -98,7 +100,7 @@ export default function Contact() {
                             }}
                         >
                             <form onSubmit={handleSubmit}>
-                                <motion.div className="mb-6" variants={formItemVariants}>
+                                <motion.div className="mb-4 sm:mb-6" variants={formItemVariants}>
                                     <label htmlFor="name" className="block text-white font-semibold mb-2">Name</label>
                                     <input
                                         type="text"
@@ -106,12 +108,12 @@ export default function Contact() {
                                         name="name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        className="w-full px-3 sm:px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
                                         placeholder="Your Name"
                                         required
                                     />
                                 </motion.div>
-                                <motion.div className="mb-6" variants={formItemVariants}>
+                                <motion.div className="mb-4 sm:mb-6" variants={formItemVariants}>
                                     <label htmlFor="email" className="block text-white font-semibold mb-2">Email</label>
                                     <input
                                         type="email"
@@ -119,12 +121,12 @@ export default function Contact() {
                                         name="email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        className="w-full px-3 sm:px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
                                         placeholder="your@email.com"
                                         required
                                     />
                                 </motion.div>
-                                <motion.div className="mb-6" variants={formItemVariants}>
+                                <motion.div className="mb-4 sm:mb-6" variants={formItemVariants}>
                                     <label htmlFor="phone" className="block text-white font-semibold mb-2">Phone</label>
                                     <input
                                         type="tel"
@@ -132,11 +134,11 @@ export default function Contact() {
                                         name="phone"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        className="w-full px-3 sm:px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
                                         placeholder="Your Phone Number"
                                     />
                                 </motion.div>
-                                <motion.div className="mb-6" variants={formItemVariants}>
+                                <motion.div className="mb-4 sm:mb-6" variants={formItemVariants}>
                                     <label htmlFor="message" className="block text-white font-semibold mb-2">Message</label>
                                     <textarea
                                         id="message"
@@ -144,14 +146,14 @@ export default function Contact() {
                                         value={formData.message}
                                         onChange={handleChange}
                                         rows="4"
-                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        className="w-full px-3 sm:px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
                                         placeholder="Your Message"
                                         required
                                     ></textarea>
                                 </motion.div>
                                 <motion.button
                                     type="submit"
-                                    className="w-full bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition duration-300 font-semibold"
+                                    className="w-full bg-red-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-md hover:bg-red-700 transition duration-300 font-semibold text-sm sm:text-base"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     style={{
@@ -168,15 +170,15 @@ export default function Contact() {
                             transition={{ delay: 0.5 }}
                             className="text-white"
                         >
-                            <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
-                            <p className="mb-2"><strong>Phone:</strong> 724.630.4558</p>
-                            <p className="mb-2"><strong>Email:</strong> mark@markgulla.com</p>
-                            <p className="mb-2"><strong>Address:</strong> 1476 Old Brodhead Road, Monaca PA 15061</p>
-                            <div className="mt-8">
-                                <h3 className="text-xl font-bold mb-2">Office Hours</h3>
-                                <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
-                                <p>Saturday: 10:00 AM - 2:00 PM</p>
-                                <p>Sunday: Closed</p>
+                            <h2 className="text-xl sm:text-2xl font-bold mb-4">Contact Information</h2>
+                            <p className="mb-2 text-sm sm:text-base"><strong>Phone:</strong> 724.630.4558</p>
+                            <p className="mb-2 text-sm sm:text-base"><strong>Email:</strong> mark@markgulla.com</p>
+                            <p className="mb-2 text-sm sm:text-base"><strong>Address:</strong> 1476 Old Brodhead Road, Monaca PA 15061</p>
+                            <div className="mt-6 sm:mt-8">
+                                <h3 className="text-lg sm:text-xl font-bold mb-2">Office Hours</h3>
+                                <p className="text-sm sm:text-base">Monday - Friday: 9:00 AM - 5:00 PM</p>
+                                <p className="text-sm sm:text-base">Saturday: 10:00 AM - 2:00 PM</p>
+                                <p className="text-sm sm:text-base">Sunday: Closed</p>
                             </div>
                         </motion.div>
                     </div>

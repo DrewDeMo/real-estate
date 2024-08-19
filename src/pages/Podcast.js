@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import heroImage from '../images/hero/hero1.webp';
 
 const pageVariants = {
@@ -17,6 +18,7 @@ const pageTransition = {
 
 const Podcast = () => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <motion.div
@@ -28,7 +30,7 @@ const Podcast = () => {
       style={{ backgroundColor: theme.palette.background.default }}
     >
       {/* Hero Section */}
-      <section className="relative pt-36 pb-20 md:pt-44 md:pb-24" style={{
+      <section className="relative py-20 sm:py-32" style={{
         backgroundImage: `url(${heroImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -36,7 +38,7 @@ const Podcast = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 pt-16 sm:pt-0"
             style={{ 
               color: theme.palette.primary.contrastText,
               textShadow: '0px 2px 4px rgba(0,0,0,0.5), 0px 4px 8px rgba(0,0,0,0.3), 0px 8px 16px rgba(0,0,0,0.2)'
@@ -48,7 +50,7 @@ const Podcast = () => {
             Mark Gulla Realty Podcast
           </motion.h1>
           <p 
-            className="text-xl mb-6" 
+            className="text-lg sm:text-xl mb-6" 
             style={{ 
               color: theme.palette.primary.contrastText,
               textShadow: '0px 1px 2px rgba(0,0,0,0.5), 0px 2px 4px rgba(0,0,0,0.3), 0px 4px 8px rgba(0,0,0,0.2)'
@@ -56,16 +58,16 @@ const Podcast = () => {
           >
             Your weekly dose of real estate insights, market trends, and expert interviews
           </p>
-          <a href="#latest-episodes" className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition-colors">
+          <a href="#latest-episodes" className="inline-block bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-semibold hover:bg-blue-700 transition-colors">
             Listen Now
           </a>
         </div>
       </section>
 
-      <div className="container mx-auto px-4 py-16">
-        <div id="latest-episodes" className="mb-16">
-          <h2 className="text-3xl font-semibold mb-8">Latest Episodes</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-12 sm:py-16">
+        <div id="latest-episodes" className="mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8">Latest Episodes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <EpisodeCard
               title="Understanding the 2023 Housing Market"
               description="In this episode, we break down the current state of the housing market and what it means for buyers and sellers."
@@ -87,12 +89,12 @@ const Podcast = () => {
           </div>
         </div>
 
-        <div id="about" className="mb-16">
-          <h2 className="text-3xl font-semibold mb-6">About Our Podcast</h2>
-          <p className="text-lg mb-4">
+        <div id="about" className="mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6">About Our Podcast</h2>
+          <p className="text-base sm:text-lg mb-4">
             The Mark Gulla Realty Podcast is your go-to source for all things real estate. Hosted by industry veteran Mark Gulla, we bring you weekly episodes packed with valuable insights, market analysis, and expert interviews.
           </p>
-          <p className="text-lg">
+          <p className="text-base sm:text-lg">
             Whether you're a first-time homebuyer, seasoned investor, or simply interested in the world of real estate, our podcast offers something for everyone. Subscribe now to stay informed and ahead of the curve in the dynamic world of real estate.
           </p>
         </div>
@@ -101,22 +103,27 @@ const Podcast = () => {
   );
 };
 
-const EpisodeCard = ({ title, description, youtubeLink, imageUrl }) => (
-  <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-    <img src={imageUrl} alt={title} className="w-full h-48 object-cover" />
-    <div className="p-6">
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <a
-        href={youtubeLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-block bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-      >
-        Watch on YouTube
-      </a>
+const EpisodeCard = ({ title, description, youtubeLink, imageUrl }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  return (
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <img src={imageUrl} alt={title} className="w-full h-40 sm:h-48 object-cover" />
+      <div className="p-4 sm:p-6">
+        <h3 className="text-lg sm:text-xl font-semibold mb-2">{title}</h3>
+        <p className="text-sm sm:text-base text-gray-600 mb-4">{description}</p>
+        <a
+          href={youtubeLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-red-600 text-white px-3 sm:px-4 py-2 rounded text-sm sm:text-base hover:bg-red-700 transition-colors"
+        >
+          Watch on YouTube
+        </a>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Podcast;

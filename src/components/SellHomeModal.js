@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 
 const SellHomeModal = ({ isOpen, onClose }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [formData, setFormData] = useState({
         address: '',
         zipCode: '',
@@ -12,6 +16,17 @@ const SellHomeModal = ({ isOpen, onClose }) => {
         email: '',
         phone: ''
     });
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -35,17 +50,20 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+                    style={{ zIndex: 100000 }} // Extremely high z-index
+                    onClick={onClose}
                 >
                     <motion.div
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 50, opacity: 0 }}
-                        className="bg-white rounded-lg p-8 max-w-md w-full"
+                        className="bg-white rounded-lg p-6 sm:p-8 max-w-md w-full max-h-[90vh] overflow-y-auto"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-3xl font-bold mb-6 text-gray-800">Sell My House!</h2>
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-4">
+                        <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gray-800">Sell My House!</h2>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
                                 <label htmlFor="address" className="block text-gray-700 font-semibold mb-2">Address</label>
                                 <input
                                     type="text"
@@ -57,7 +75,7 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                                     required
                                 />
                             </div>
-                            <div className="mb-4">
+                            <div>
                                 <label htmlFor="zipCode" className="block text-gray-700 font-semibold mb-2">Zip Code</label>
                                 <input
                                     type="text"
@@ -69,7 +87,7 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                                     required
                                 />
                             </div>
-                            <div className="flex mb-4 space-x-4">
+                            <div className="flex space-x-4">
                                 <div className="w-1/2">
                                     <label htmlFor="beds" className="block text-gray-700 font-semibold mb-2">Beds</label>
                                     <div className="flex items-center">
@@ -129,7 +147,7 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mb-4">
+                            <div>
                                 <label htmlFor="propertyType" className="block text-gray-700 font-semibold mb-2">Property Type</label>
                                 <select
                                     id="propertyType"
@@ -145,7 +163,7 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                                     <option value="Condo">Condo</option>
                                 </select>
                             </div>
-                            <div className="mb-4">
+                            <div>
                                 <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Name*</label>
                                 <input
                                     type="text"
@@ -157,7 +175,7 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                                     required
                                 />
                             </div>
-                            <div className="mb-4">
+                            <div>
                                 <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">Email*</label>
                                 <input
                                     type="email"
@@ -169,7 +187,7 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                                     required
                                 />
                             </div>
-                            <div className="mb-6">
+                            <div>
                                 <label htmlFor="phone" className="block text-gray-700 font-semibold mb-2">Phone Number(s)</label>
                                 <input
                                     type="tel"
@@ -180,7 +198,7 @@ const SellHomeModal = ({ isOpen, onClose }) => {
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
-                            <div className="flex justify-end space-x-4">
+                            <div className="flex justify-end space-x-4 pt-4">
                                 <button
                                     type="button"
                                     onClick={onClose}
