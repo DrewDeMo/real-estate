@@ -89,61 +89,74 @@ export default function Contact() {
                                     }
                                 }
                             }}
-                            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg"
+                            className="glassmorphism p-8 rounded-xl shadow-2xl"
+                            style={{
+                                background: 'rgba(255, 255, 255, 0.1)',
+                                backdropFilter: 'blur(10px)',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)'
+                            }}
                         >
                             <form onSubmit={handleSubmit}>
-                                <motion.div className="mb-4" variants={formItemVariants}>
-                                    <label htmlFor="name" className="block text-gray-700 dark:text-gray-300 font-bold mb-2">Name</label>
+                                <motion.div className="mb-6" variants={formItemVariants}>
+                                    <label htmlFor="name" className="block text-white font-semibold mb-2">Name</label>
                                     <input
                                         type="text"
                                         id="name"
                                         name="name"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        placeholder="Your Name"
                                         required
                                     />
                                 </motion.div>
-                                <motion.div className="mb-4" variants={formItemVariants}>
-                                    <label htmlFor="email" className="block text-gray-700 dark:text-gray-300 font-bold mb-2">Email</label>
+                                <motion.div className="mb-6" variants={formItemVariants}>
+                                    <label htmlFor="email" className="block text-white font-semibold mb-2">Email</label>
                                     <input
                                         type="email"
                                         id="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        placeholder="your@email.com"
                                         required
                                     />
                                 </motion.div>
-                                <motion.div className="mb-4" variants={formItemVariants}>
-                                    <label htmlFor="phone" className="block text-gray-700 dark:text-gray-300 font-bold mb-2">Phone</label>
+                                <motion.div className="mb-6" variants={formItemVariants}>
+                                    <label htmlFor="phone" className="block text-white font-semibold mb-2">Phone</label>
                                     <input
                                         type="tel"
                                         id="phone"
                                         name="phone"
                                         value={formData.phone}
                                         onChange={handleChange}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        placeholder="Your Phone Number"
                                     />
                                 </motion.div>
-                                <motion.div className="mb-4" variants={formItemVariants}>
-                                    <label htmlFor="message" className="block text-gray-700 dark:text-gray-300 font-bold mb-2">Message</label>
+                                <motion.div className="mb-6" variants={formItemVariants}>
+                                    <label htmlFor="message" className="block text-white font-semibold mb-2">Message</label>
                                     <textarea
                                         id="message"
                                         name="message"
                                         value={formData.message}
                                         onChange={handleChange}
                                         rows="4"
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        className="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-white placeholder-opacity-70"
+                                        placeholder="Your Message"
                                         required
                                     ></textarea>
                                 </motion.div>
                                 <motion.button
                                     type="submit"
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 dark:bg-blue-500 dark:hover:bg-blue-600"
+                                    className="w-full bg-red-600 text-white px-6 py-3 rounded-md hover:bg-red-700 transition duration-300 font-semibold"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
+                                    style={{
+                                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08)'
+                                    }}
                                 >
                                     Send Message
                                 </motion.button>

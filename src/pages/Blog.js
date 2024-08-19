@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { useTheme } from '@mui/material/styles';
 import heroImage from '../images/hero/blog_hero.webp';
 import markPhoto from '../images/headshots/MarkPhoto3.webp';
+import airqualityBlog from '../images/blog/airquality_blog.webp';
+import outdoordecorBlog from '../images/blog/outdoordecor_blog.webp';
+import predictingBlog from '../images/blog/predicting_blog.webp';
 
 const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -28,6 +31,7 @@ export const blogPosts = [
         date: "August 12, 2024",
         author: "Mark Gulla",
         authorImage: markPhoto,
+        image: predictingBlog,
         content: `To begin the process, start by asking yourself the following questions:
 
 What will my family look like in three to five years? Will there be a new addition (or two) to your family? Will you have kids that are grown up and about to move out? What is the possibility that an elderly relative (Mom, Dad or grandparent) will be living with you?
@@ -52,6 +56,7 @@ By looking three to five years into the future, you will be able to predict your
         date: "July 29, 2024",
         author: "Mark Gulla",
         authorImage: markPhoto,
+        image: airqualityBlog,
         content: `Here are some ideas:
 
 Check the furnace filter. This is one of the most overlooked maintenance items in the home. Any furnace repair person can tell you stories about filters they've seen caked in dust. Make sure those aren't yours. Air passes through those filters before circulating throughout your home. Replacing a filter takes less than five minutes.
@@ -72,6 +77,7 @@ Of course, you can always open a window. That's the most popular and easiest way
         date: "August 5, 2024",
         author: "Mark Gulla",
         authorImage: markPhoto,
+        image: outdoordecorBlog,
         content: `For an easy, immediate change try adding new lighting – a touch of whimsy, string lights on a porch, balcony, or pergola will do the trick. For a modern, sleek look there are smart LED light strips you can connect with a virtual assistant like Alexa. Layer light for dimension and to set the mood.
 
 Adding plants is another way to brighten your space. Think colorful annuals grouped in pots, with a color scheme for cohesion. You could also add a shallow planter of succulents on a table. For privacy, full-leaf plants, fast-growing vines, and ornamental grasses are good options.
@@ -138,12 +144,13 @@ export default function Blog() {
                     {blogPosts.map((post) => (
                         <motion.article 
                             key={post.id}
-                            className="subtle-border rounded-lg shadow-md"
+                            className="subtle-border rounded-lg shadow-md overflow-hidden"
                             style={{ backgroundColor: theme.palette.background.paper }}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                         >
+                            <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-5 text-gray-500">
                                     <span className="bg-primary-100 text-primary-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded" style={{ backgroundColor: theme.palette.primary.light, color: theme.palette.primary.contrastText }}>

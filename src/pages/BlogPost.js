@@ -48,8 +48,6 @@ export default function BlogPost() {
     return <div className="text-center py-10">Blog post not found</div>;
   }
 
-  const heroImageUrl = `https://source.unsplash.com/1600x900/?${post.category.replace(/\s+/g, ',')}`;
-
   return (
     <motion.div
       initial="initial"
@@ -61,7 +59,7 @@ export default function BlogPost() {
     >
       {/* Hero Section */}
       <section className="relative h-96" style={{
-        backgroundImage: `url(${heroImageUrl})`,
+        backgroundImage: `url(${post.image})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}>
@@ -127,7 +125,7 @@ export default function BlogPost() {
                 whileHover={{ y: -5 }}
               >
                 <img
-                  src={`https://source.unsplash.com/400x250/?${relatedPost.category.replace(/\s+/g, ',')}`}
+                  src={relatedPost.image}
                   alt={relatedPost.title}
                   className="w-full h-48 object-cover"
                 />

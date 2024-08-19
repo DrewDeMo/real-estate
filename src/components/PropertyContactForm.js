@@ -1,7 +1,10 @@
 // src/components/PropertyContactForm.js
 import React, { useState } from 'react';
+import { Typography, TextField, Button, Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 const PropertyContactForm = ({ propertyId, propertyTitle }) => {
+    const theme = useTheme();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -28,59 +31,71 @@ const PropertyContactForm = ({ propertyId, propertyTitle }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-gray-100 p-6 rounded-lg">
-            <h3 className="text-xl font-semibold mb-4">Interested in this property?</h3>
-            <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700 font-bold mb-2">Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="phone" className="block text-gray-700 font-bold mb-2">Phone</label>
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-            </div>
-            <div className="mb-4">
-                <label htmlFor="message" className="block text-gray-700 font-bold mb-2">Message</label>
-                <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows="4"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                ></textarea>
-            </div>
-            <button type="submit" className="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">
+        <Box component="form" onSubmit={handleSubmit}>
+            <Typography variant="h6" gutterBottom>Interested in this property?</Typography>
+            <TextField
+                fullWidth
+                margin="normal"
+                label="Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                variant="outlined"
+            />
+            <TextField
+                fullWidth
+                margin="normal"
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                variant="outlined"
+            />
+            <TextField
+                fullWidth
+                margin="normal"
+                label="Phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+                variant="outlined"
+            />
+            <TextField
+                fullWidth
+                margin="normal"
+                label="Message"
+                name="message"
+                multiline
+                rows={4}
+                value={formData.message}
+                onChange={handleChange}
+                required
+                variant="outlined"
+            />
+            <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{
+                    mt: 2,
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.primary.contrastText,
+                    boxShadow: 'none',
+                    borderRadius: 0,
+                    textTransform: 'none',
+                    '&:hover': {
+                        backgroundColor: theme.palette.primary.dark,
+                        boxShadow: 'none',
+                    },
+                }}
+            >
                 Send Message
-            </button>
-        </form>
+            </Button>
+        </Box>
     );
 };
 

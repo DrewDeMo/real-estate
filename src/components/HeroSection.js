@@ -61,7 +61,7 @@ const CustomArrow = ({ direction, onClick }) => {
 
 const MotionLink = motion(Link);
 
-const HeroSection = () => {
+const HeroSection = ({ onSellProperty }) => {
     const theme = useTheme();
     const [showArrows, setShowArrows] = useState(false);
     const [fadeTimeout, setFadeTimeout] = useState(null);
@@ -119,7 +119,7 @@ const HeroSection = () => {
 
     return (
         <section
-            className="relative h-[calc(100vh-64px)] min-h-[690px] max-h-[1104px] overflow-hidden bg-black"
+            className="relative w-full h-screen overflow-hidden"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -134,15 +134,24 @@ const HeroSection = () => {
                 section:hover .custom-arrow {
                     opacity: ${showArrows ? 1 : 0};
                 }
+                .slick-slider, .slick-list, .slick-track {
+                    height: 100%;
+                }
+                .slick-slide > div {
+                    height: 100%;
+                }
             `}</style>
             <Slider {...settings} className="h-full">
                 {sliderImages.map((img, index) => (
                     <div key={index} className="h-full">
-                        <img
-                            src={img}
-                            alt={`House ${index + 1}`}
-                            className="w-full h-full object-cover opacity-50"
-                        />
+                        <div className="w-full h-full relative">
+                            <img
+                                src={img}
+                                alt={`House ${index + 1}`}
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black opacity-50"></div>
+                        </div>
                     </div>
                 ))}
             </Slider>
@@ -173,23 +182,23 @@ const HeroSection = () => {
                 </motion.div>
                 <div className="flex space-x-4">
                     <MotionLink
-                        to="/explore"
+                        to="/listings"
                         className="text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300"
                         style={{ backgroundColor: theme.palette.primary.main }}
                         whileHover={{ scale: 1.05, backgroundColor: theme.palette.primary.dark }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        Start exploring
+                        View Properties
                     </MotionLink>
-                    <MotionLink
-                        to="/post-property"
+                    <motion.button
+                        onClick={onSellProperty}
                         className="px-6 py-3 rounded-full text-lg font-semibold transition duration-300"
                         style={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
                         whileHover={{ scale: 1.05, backgroundColor: theme.palette.background.paper }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        Post a property
-                    </MotionLink>
+                        Sell a Property
+                    </motion.button>
                 </div>
             </div>
         </section>

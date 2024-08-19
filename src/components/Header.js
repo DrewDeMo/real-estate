@@ -31,8 +31,10 @@ export default function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const isPropertyPage = location.pathname.startsWith('/property/');
+
     const getHeaderStyle = () => {
-        if (isScrolled) {
+        if (isScrolled || isPropertyPage) {
             return {
                 backgroundColor: theme.palette.secondary.main,
                 padding: theme.spacing(1),
@@ -68,10 +70,10 @@ export default function Header() {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                 >
-                                    <span className={`font-black transition-all duration-300`} style={{ color: theme.palette.primary.contrastText, fontSize: isScrolled ? '1.125rem' : '1.25rem' }}>
+                                    <span className={`font-black transition-all duration-300`} style={{ color: theme.palette.primary.contrastText, fontSize: isScrolled || isPropertyPage ? '1.125rem' : '1.25rem' }}>
                                         Mark Gulla
                                     </span>
-                                    <span className={`font-light transition-all duration-300`} style={{ color: theme.palette.primary.contrastText, fontSize: isScrolled ? '0.75rem' : '0.875rem' }}>
+                                    <span className={`font-light transition-all duration-300`} style={{ color: theme.palette.primary.contrastText, fontSize: isScrolled || isPropertyPage ? '0.75rem' : '0.875rem' }}>
                                         Full Time Realtor
                                     </span>
                                 </MotionLink>

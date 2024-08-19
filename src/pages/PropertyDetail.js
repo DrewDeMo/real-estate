@@ -5,6 +5,10 @@ import { motion } from 'framer-motion';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 import PropertyContactForm from '../components/PropertyContactForm';
+import { useTheme } from '@mui/material/styles';
+import { Typography, Paper, Grid, Box, Chip } from '@mui/material';
+import { styled } from '@mui/system';
+import { FaBed, FaBath, FaRuler } from 'react-icons/fa';
 
 const pageVariants = {
     initial: { opacity: 0, y: 20 },
@@ -20,8 +24,27 @@ const pageTransition = {
 
 const MotionLink = motion(Link);
 
+const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
+    boxShadow: 'none',
+}));
+
+const FeatureChip = styled(Chip)(({ theme }) => ({
+    margin: theme.spacing(0.5),
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    borderRadius: theme.shape.borderRadius,
+    '&:hover': {
+        backgroundColor: theme.palette.action.hover,
+    },
+}));
+
 const PropertyDetail = () => {
     const { id } = useParams();
+    const theme = useTheme();
 
     // Simulated property data
     const property = {
@@ -57,100 +80,86 @@ const PropertyDetail = () => {
             exit="out"
             variants={pageVariants}
             transition={pageTransition}
-            className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24 md:pt-28" // Added padding-top
+            style={{ paddingTop: theme.spacing(10), backgroundColor: theme.palette.background.default }}
         >
-            <MotionLink
-                to="/listings"
-                className="text-blue-600 hover:underline mb-4 inline-block"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-            >
-                &larr; Back to Listings
-            </MotionLink>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 }}
+            <Box maxWidth="lg" margin="auto" padding={3}>
+                <MotionLink
+                    to="/listings"
+                    style={{ 
+                        color: theme.palette.primary.main, 
+                        marginBottom: theme.spacing(2), 
+                        display: 'inline-block',
+                        textDecoration: 'none',
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                 >
-                    <ImageGallery items={property.images} showPlayButton={false} showFullscreenButton={false} />
-                    <motion.div
-                        className="mt-8"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.4 }}
-                    >
-                        <h2 className="text-xl font-semibold mb-2">Features:</h2>
-                        <ul className="list-disc list-inside mb-4">
-                            {property.features.map((feature, index) => (
-                                <motion.li
-                                    key={index}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.6 + index * 0.1 }}
-                                >
-                                    {feature}
-                                </motion.li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                </motion.div>
-                <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 }}
-                >
-                    <motion.h1
-                        className="text-3xl font-bold mb-4"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                    >
-                        {property.title}
-                    </motion.h1>
-                    <motion.p
-                        className="text-xl text-gray-600 mb-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                    >
-                        {property.address}
-                    </motion.p>
-                    <motion.p
-                        className="text-2xl font-bold text-blue-600 mb-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.6 }}
-                    >
-                        ${property.price.toLocaleString()}
-                    </motion.p>
-                    <motion.div
-                        className="flex space-x-4 mb-4"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.7 }}
-                    >
-                        <p>{property.beds} beds</p>
-                        <p>{property.baths} baths</p>
-                        <p>{property.sqft} sqft</p>
-                    </motion.div>
-                    <motion.p
-                        className="mb-8"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.8 }}
-                    >
-                        {property.description}
-                    </motion.p>
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
-                    >
-                        <PropertyContactForm propertyId={property.id} propertyTitle={property.title} />
-                    </motion.div>
-                </motion.div>
-            </div>
+                    &larr; Back to Listings
+                </MotionLink>
+                <Grid container spacing={4}>
+                    <Grid item xs={12} md={7}>
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            <StyledPaper>
+                                <ImageGallery 
+                                    items={property.images} 
+                                    showPlayButton={false} 
+                                    showFullscreenButton={false}
+                                    showNav={false}
+                                    showBullets={true}
+                                />
+                            </StyledPaper>
+                            <StyledPaper>
+                                <Typography variant="h6" gutterBottom>Features:</Typography>
+                                <Box display="flex" flexWrap="wrap">
+                                    {property.features.map((feature, index) => (
+                                        <FeatureChip key={index} label={feature} />
+                                    ))}
+                                </Box>
+                            </StyledPaper>
+                        </motion.div>
+                    </Grid>
+                    <Grid item xs={12} md={5}>
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            <StyledPaper>
+                                <Typography variant="h4" gutterBottom style={{ color: theme.palette.primary.main }}>
+                                    {property.title}
+                                </Typography>
+                                <Typography variant="subtitle1" gutterBottom style={{ color: theme.palette.text.secondary }}>
+                                    {property.address}
+                                </Typography>
+                                <Typography variant="h5" gutterBottom style={{ color: theme.palette.secondary.main, fontWeight: 'bold' }}>
+                                    ${property.price.toLocaleString()}
+                                </Typography>
+                                <Box display="flex" justifyContent="space-between" marginBottom={2}>
+                                    <Typography variant="body1" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <FaBed style={{ marginRight: '0.5rem' }} /> {property.beds} beds
+                                    </Typography>
+                                    <Typography variant="body1" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <FaBath style={{ marginRight: '0.5rem' }} /> {property.baths} baths
+                                    </Typography>
+                                    <Typography variant="body1" style={{ display: 'flex', alignItems: 'center' }}>
+                                        <FaRuler style={{ marginRight: '0.5rem' }} /> {property.sqft} sqft
+                                    </Typography>
+                                </Box>
+                                <Typography variant="body1" paragraph>
+                                    {property.description}
+                                </Typography>
+                            </StyledPaper>
+                            <StyledPaper>
+                                <PropertyContactForm propertyId={property.id} propertyTitle={property.title} />
+                            </StyledPaper>
+                        </motion.div>
+                    </Grid>
+                </Grid>
+            </Box>
         </motion.div>
     );
 };

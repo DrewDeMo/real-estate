@@ -10,7 +10,7 @@ const theme = createTheme({
     },
     background: {
       default: '#FFFFFF', // White
-      paper: '#F5F5F5', // Light Gray
+      paper: '#FFFFFF', // White
     },
     text: {
       primary: '#000000', // Black
@@ -18,7 +18,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Arial, sans-serif',
+    fontFamily: 'Manrope, Arial, sans-serif',
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
