@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { blogPosts } from './Blog'; // Import blog posts from Blog page
 import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaCalendarAlt, FaComment, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useTheme } from '@mui/material/styles';
-import { TextField, Select, MenuItem, FormControl, InputLabel, Button, IconButton, Box } from '@mui/material';
+import { TextField, Select, MenuItem, FormControl, InputLabel, Button, IconButton, Box, useMediaQuery } from '@mui/material';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -79,6 +79,7 @@ const testimonials = [
 
 const SellPropertyModule = ({ isOpen, onClose }) => {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [formData, setFormData] = useState({
         address: '',
         zipCode: '',
@@ -159,7 +160,7 @@ const SellPropertyModule = ({ isOpen, onClose }) => {
                                     required
                                     variant="outlined"
                                 />
-                                <Box sx={{ display: 'flex', gap: 2, my: 2 }}>
+                                <Box sx={{ display: 'flex', gap: 2, my: 2, flexDirection: isMobile ? 'column' : 'row' }}>
                                     <FormControl fullWidth variant="outlined">
                                         <InputLabel>Beds</InputLabel>
                                         <Select
@@ -315,6 +316,7 @@ const CustomArrow = ({ direction, onClick }) => {
 
 const HeroSection = ({ onSellProperty }) => {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [showArrows, setShowArrows] = useState(false);
     const [fadeTimeout, setFadeTimeout] = useState(null);
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -371,7 +373,7 @@ const HeroSection = ({ onSellProperty }) => {
 
     return (
         <section
-            className="relative w-full h-screen overflow-hidden"
+            className="relative w-full h-[90vh] overflow-hidden"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -432,10 +434,10 @@ const HeroSection = ({ onSellProperty }) => {
                     </p>
                     <SearchBar />
                 </motion.div>
-                <div className="flex space-x-4">
+                <div className={`flex ${isMobile ? 'flex-col space-y-4' : 'space-x-4'}`}>
                     <MotionLink
                         to="/listings"
-                        className="text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300"
+                        className="text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 w-full sm:w-auto text-center"
                         style={{ backgroundColor: theme.palette.primary.main }}
                         whileHover={{ scale: 1.05, backgroundColor: theme.palette.primary.dark }}
                         whileTap={{ scale: 0.95 }}
@@ -444,7 +446,7 @@ const HeroSection = ({ onSellProperty }) => {
                     </MotionLink>
                     <motion.button
                         onClick={onSellProperty}
-                        className="px-6 py-3 rounded-full text-lg font-semibold transition duration-300"
+                        className="px-6 py-3 rounded-full text-lg font-semibold transition duration-300 w-full sm:w-auto"
                         style={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
                         whileHover={{ scale: 1.05, backgroundColor: theme.palette.background.paper }}
                         whileTap={{ scale: 0.95 }}
@@ -459,6 +461,7 @@ const HeroSection = ({ onSellProperty }) => {
 
 export default function Home() {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [currentTestimonial, setCurrentTestimonial] = useState(0);
     const [isSellPropertyOpen, setIsSellPropertyOpen] = useState(false);
 
@@ -483,22 +486,22 @@ export default function Home() {
             <DreamLivingSpaces />
 
             {/* Featured Listings Section */}
-            <section className="py-24" style={{ backgroundColor: "#f8fafc" }}>
+            <section className="py-16 sm:py-24" style={{ backgroundColor: "#f8fafc" }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold" style={{ color: theme.palette.text.primary }}>Featured Listings</h2>
-                        <p className="mt-4 text-xl" style={{ color: theme.palette.text.secondary }}>Discover our handpicked selection of premium properties</p>
+                    <div className="text-center mb-12 sm:mb-16">
+                        <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: theme.palette.text.primary }}>Featured Listings</h2>
+                        <p className="mt-4 text-lg sm:text-xl" style={{ color: theme.palette.text.secondary }}>Discover our handpicked selection of premium properties</p>
                     </div>
                     <FeaturedListingsCarousel />
                 </div>
             </section>
 
             {/* Social Media Feed Section */}
-            <section className="py-24" style={{ backgroundColor: theme.palette.secondary.main }}>
+            <section className="py-16 sm:py-24" style={{ backgroundColor: theme.palette.secondary.main }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold" style={{ color: theme.palette.secondary.contrastText }}>Stay Connected</h2>
-                        <p className="mt-4 text-xl mb-6" style={{ color: theme.palette.secondary.contrastText }}>Follow us on social media for the latest updates</p>
+                    <div className="text-center mb-12 sm:mb-16">
+                        <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: theme.palette.secondary.contrastText }}>Stay Connected</h2>
+                        <p className="mt-4 text-lg sm:text-xl mb-6" style={{ color: theme.palette.secondary.contrastText }}>Follow us on social media for the latest updates</p>
                         <div className="flex justify-center space-x-4">
                             <SocialButton icon={FaYoutube} link="https://www.youtube.com/channel/UCIm00ua1ujEJqPea1RcMiGg" label="YouTube" />
                             <SocialButton icon={FaTwitter} link="https://x.com/markyg115" label="Twitter" />
@@ -511,11 +514,11 @@ export default function Home() {
             </section>
 
             {/* Latest News & Articles Section */}
-            <section className="py-24" style={{ backgroundColor: "#f8fafc" }}>
+            <section className="py-16 sm:py-24" style={{ backgroundColor: "#f8fafc" }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
+                    <div className="text-center mb-12 sm:mb-16">
                         <span className="font-semibold" style={{ color: theme.palette.primary.main }}>LATEST NEWS AND ARTICLES</span>
-                        <h2 className="text-4xl font-bold mt-2" style={{ color: theme.palette.text.primary }}>Latest News & articles From the blog</h2>
+                        <h2 className="text-3xl sm:text-4xl font-bold mt-2" style={{ color: theme.palette.text.primary }}>Latest News & articles From the blog</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {blogPosts.slice(0, 3).map((post, index) => (
@@ -572,24 +575,24 @@ export default function Home() {
             </section>
 
             {/* Our Partners Section */}
-            <section className="py-24" style={{ backgroundColor: theme.palette.background.paper }}>
+            <section className="py-16 sm:py-24" style={{ backgroundColor: theme.palette.background.paper }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold" style={{ color: theme.palette.text.primary }}>Our Partners</h2>
-                        <p className="mt-4 text-xl" style={{ color: theme.palette.text.secondary }}>Trusted by the best in the industry</p>
+                    <div className="text-center mb-12 sm:mb-16">
+                        <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: theme.palette.text.primary }}>Our Partners</h2>
+                        <p className="mt-4 text-lg sm:text-xl" style={{ color: theme.palette.text.secondary }}>Trusted by the best in the industry</p>
                     </div>
                     <LogoCarousel />
                 </div>
             </section>
 
             {/* Testimonials Section */}
-            <section className="py-24" style={{ backgroundColor: "#f8fafc" }}>
+            <section className="py-16 sm:py-24" style={{ backgroundColor: "#f8fafc" }}>
                 <div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold" style={{ color: theme.palette.text.primary }}>What Our Clients Say</h2>
-                        <p className="mt-4 text-xl" style={{ color: theme.palette.text.secondary }}>Real experiences from satisfied homeowners</p>
+                    <div className="text-center mb-12 sm:mb-16">
+                        <h2 className="text-3xl sm:text-4xl font-bold" style={{ color: theme.palette.text.primary }}>What Our Clients Say</h2>
+                        <p className="mt-4 text-lg sm:text-xl" style={{ color: theme.palette.text.secondary }}>Real experiences from satisfied homeowners</p>
                     </div>
-                    <div className="relative h-[400px]">
+                    <div className="relative h-[400px] sm:h-[300px]">
                         <AnimatePresence>
                             <motion.figure
                                 key={currentTestimonial}
@@ -609,7 +612,7 @@ export default function Home() {
                                     <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
                                 </svg> 
                                 <blockquote>
-                                    <p className="text-2xl font-medium" style={{ color: theme.palette.text.primary }}>
+                                    <p className="text-xl sm:text-2xl font-medium" style={{ color: theme.palette.text.primary }}>
                                         "{testimonials[currentTestimonial].text}"
                                     </p>
                                 </blockquote>
