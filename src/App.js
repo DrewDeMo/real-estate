@@ -6,12 +6,14 @@ import { ThemeProvider } from '@mui/material/styles';
 import Header from './components/Header';
 import PodcastHeader from './components/PodcastHeader';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Listings from './pages/Listings';
 import PropertyDetail from './pages/PropertyDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import Podcast from './pages/Podcast';
 import theme from './styles/theme';
 import './styles/global.css';
@@ -23,6 +25,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <div className="flex flex-col min-h-screen overflow-x-hidden">
+                <ScrollToTop />
                 {isPodcastPage ? <PodcastHeader /> : <Header />}
 
                 <main className="flex-grow max-w-full">
@@ -34,6 +37,7 @@ function App() {
                             <Route path="/about" element={<About />} />
                             <Route path="/contact" element={<Contact />} />
                             <Route path="/blog" element={<Blog />} />
+                            <Route path="/blog/:id" element={<BlogPost />} />
                             <Route path="/podcast" element={<Podcast />} />
                         </Routes>
                     </AnimatePresence>

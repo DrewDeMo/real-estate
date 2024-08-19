@@ -1,24 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { TextField, Button, IconButton, Typography, Box, Slider, Autocomplete, Chip, Tooltip } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { TextField, Button, IconButton, Typography, Box, Slider, Autocomplete, Chip, Tooltip, Grid } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import SearchIcon from '@mui/icons-material/Search';
 import TuneIcon from '@mui/icons-material/Tune';
 import ClearIcon from '@mui/icons-material/Clear';
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#333333',
-        },
-        background: {
-            default: '#ffffff',
-        },
-    },
-});
+import theme from '../styles/theme';
 
 const AdvancedSearch = ({ onSearch }) => {
     const [filters, setFilters] = useState({
@@ -60,28 +50,38 @@ const AdvancedSearch = ({ onSearch }) => {
         });
     };
 
-    const glassmorphicStyle = {
-        background: alpha(theme.palette.background.default, 0.7),
-        borderRadius: '16px',
+    const containerStyle = {
+        backgroundColor: theme.palette.background.paper,
+        borderRadius: '12px',
         padding: '24px',
-        border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
-        backdropFilter: 'blur(10px)',
+        border: `1px solid ${alpha(theme.palette.text.primary, 0.1)}`,
     };
 
     const inputStyle = {
         '& .MuiOutlinedInput-root': {
             borderRadius: '8px',
-            backgroundColor: alpha(theme.palette.background.default, 0.8),
+            transition: 'all 0.3s ease',
             '&:hover': {
-                backgroundColor: alpha(theme.palette.background.default, 0.9),
+                borderColor: alpha(theme.palette.text.primary, 0.3),
             },
             '&.Mui-focused': {
-                backgroundColor: theme.palette.background.default,
+                borderColor: theme.palette.primary.main,
             },
         },
         '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: alpha(theme.palette.primary.main, 0.3),
+            borderColor: alpha(theme.palette.text.primary, 0.1),
         },
+    };
+
+    const counterStyle = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: `1px solid ${alpha(theme.palette.text.primary, 0.1)}`,
+        borderRadius: '8px',
+        padding: '4px',
+        width: '100%',
+        height: '56px', // Match height with other inputs
     };
 
     const propertyTypes = ['House', 'Apartment', 'Condo', 'Townhouse', 'Land'];
@@ -89,43 +89,31 @@ const AdvancedSearch = ({ onSearch }) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <form onSubmit={handleSubmit} style={glassmorphicStyle}>
-                <Box display="grid" gridTemplateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap={3}>
-                    <TextField
-                        label="Location"
-                        name="location"
-                        value={filters.location}
-                        onChange={(e) => handleChange('location', e.target.value)}
-                        fullWidth
-                        variant="outlined"
-                        sx={inputStyle}
-                    />
-                    <Autocomplete
-                        options={propertyTypes}
-                        renderInput={(params) => <TextField {...params} label="Property Type" variant="outlined" sx={inputStyle} />}
-                        value={filters.propertyType}
-                        onChange={(_, newValue) => handleChange('propertyType', newValue)}
-                        fullWidth
-                    />
-                    <Box>
-                        <Typography variant="subtitle2" gutterBottom>Price Range</Typography>
-                        <Slider
-                            value={filters.priceRange}
-                            onChange={(_, newValue) => handleChange('priceRange', newValue)}
-                            valueLabelDisplay="auto"
-                            min={0}
-                            max={1000000}
-                            step={10000}
-                            sx={{ color: theme.palette.primary.main }}
+            <form onSubmit={handleSubmit} style={containerStyle}>
+                <Grid container spacing={2} alignItems="flex-end">
+                    <Grid item xs={12} sm={6} md={3}>
+                        <TextField
+                            label="Location"
+                            name="location"
+                            value={filters.location}
+                            onChange={(e) => handleChange('location', e.target.value)}
+                            fullWidth
+                            variant="outlined"
+                            sx={inputStyle}
                         />
-                        <Box display="flex" justifyContent="space-between">
-                            <Typography variant="caption">${filters.priceRange[0].toLocaleString()}</Typography>
-                            <Typography variant="caption">${filters.priceRange[1].toLocaleString()}</Typography>
-                        </Box>
-                    </Box>
-                    <Box>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <Autocomplete
+                            options={propertyTypes}
+                            renderInput={(params) => <TextField {...params} label="Property Type" variant="outlined" sx={inputStyle} />}
+                            value={filters.propertyType}
+                            onChange={(_, newValue) => handleChange('propertyType', newValue)}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={6} sm={3} md={2}>
                         <Typography variant="subtitle2" gutterBottom>Beds</Typography>
-                        <Box display="flex" alignItems="center" border={`1px solid ${alpha(theme.palette.primary.main, 0.3)}`} borderRadius="8px" p={1}>
+                        <Box sx={counterStyle}>
                             <IconButton onClick={() => handleDecrement('beds')} disabled={filters.beds === 0} size="small">
                                 <RemoveIcon />
                             </IconButton>
@@ -134,10 +122,10 @@ const AdvancedSearch = ({ onSearch }) => {
                                 <AddIcon />
                             </IconButton>
                         </Box>
-                    </Box>
-                    <Box>
+                    </Grid>
+                    <Grid item xs={6} sm={3} md={2}>
                         <Typography variant="subtitle2" gutterBottom>Baths</Typography>
-                        <Box display="flex" alignItems="center" border={`1px solid ${alpha(theme.palette.primary.main, 0.3)}`} borderRadius="8px" p={1}>
+                        <Box sx={counterStyle}>
                             <IconButton onClick={() => handleDecrement('baths')} disabled={filters.baths === 0} size="small">
                                 <RemoveIcon />
                             </IconButton>
@@ -146,45 +134,8 @@ const AdvancedSearch = ({ onSearch }) => {
                                 <AddIcon />
                             </IconButton>
                         </Box>
-                    </Box>
-                </Box>
-                {showAdvanced && (
-                    <Box mt={3}>
-                        <Typography variant="subtitle2" gutterBottom>Amenities</Typography>
-                        <Box display="flex" flexWrap="wrap" gap={1}>
-                            {amenities.map((amenity) => (
-                                <Chip
-                                    key={amenity}
-                                    label={amenity}
-                                    onClick={() => {
-                                        const newAmenities = filters.amenities.includes(amenity)
-                                            ? filters.amenities.filter(a => a !== amenity)
-                                            : [...filters.amenities, amenity];
-                                        handleChange('amenities', newAmenities);
-                                    }}
-                                    color={filters.amenities.includes(amenity) ? "primary" : "default"}
-                                    variant={filters.amenities.includes(amenity) ? "filled" : "outlined"}
-                                />
-                            ))}
-                        </Box>
-                    </Box>
-                )}
-                <Box mt={3} display="flex" justifyContent="space-between" alignItems="center">
-                    <Button
-                        onClick={() => setShowAdvanced(!showAdvanced)}
-                        startIcon={<TuneIcon />}
-                        variant="text"
-                    >
-                        {showAdvanced ? 'Hide' : 'Show'} Advanced Filters
-                    </Button>
-                    <Tooltip title="Clear all filters">
-                        <IconButton onClick={handleClearFilters} size="small">
-                            <ClearIcon />
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-                <Box mt={3}>
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={2}>
                         <Button
                             type="submit"
                             variant="contained"
@@ -193,20 +144,102 @@ const AdvancedSearch = ({ onSearch }) => {
                             startIcon={<SearchIcon />}
                             sx={{
                                 borderRadius: '8px',
-                                padding: '12px 24px',
+                                padding: '15px 24px',
                                 fontSize: '1rem',
                                 fontWeight: 600,
                                 textTransform: 'none',
                                 backgroundColor: theme.palette.primary.main,
                                 color: theme.palette.background.default,
+                                border: `1px solid ${theme.palette.primary.main}`,
                                 '&:hover': {
                                     backgroundColor: alpha(theme.palette.primary.main, 0.9),
                                 },
                             }}
                         >
-                            Search Properties
+                            Search
                         </Button>
-                    </motion.div>
+                    </Grid>
+                </Grid>
+                {showAdvanced && (
+                    <Box mt={3}>
+                        <Typography variant="subtitle2" gutterBottom>Price Range</Typography>
+                        <Slider
+                            value={filters.priceRange}
+                            onChange={(_, newValue) => handleChange('priceRange', newValue)}
+                            valueLabelDisplay="auto"
+                            min={0}
+                            max={1000000}
+                            step={10000}
+                            sx={{ 
+                                color: theme.palette.primary.main,
+                                '& .MuiSlider-thumb': {
+                                    '&:hover, &.Mui-focusVisible': {
+                                        boxShadow: `0px 0px 0px 8px ${alpha(theme.palette.primary.main, 0.16)}`,
+                                    },
+                                },
+                            }}
+                        />
+                        <Box display="flex" justifyContent="space-between">
+                            <Typography variant="caption">${filters.priceRange[0].toLocaleString()}</Typography>
+                            <Typography variant="caption">${filters.priceRange[1].toLocaleString()}</Typography>
+                        </Box>
+                        <Box mt={2}>
+                            <Typography variant="subtitle2" gutterBottom>Amenities</Typography>
+                            <Box display="flex" flexWrap="wrap" gap={1}>
+                                {amenities.map((amenity) => (
+                                    <Chip
+                                        key={amenity}
+                                        label={amenity}
+                                        onClick={() => {
+                                            const newAmenities = filters.amenities.includes(amenity)
+                                                ? filters.amenities.filter(a => a !== amenity)
+                                                : [...filters.amenities, amenity];
+                                            handleChange('amenities', newAmenities);
+                                        }}
+                                        color={filters.amenities.includes(amenity) ? "primary" : "default"}
+                                        variant={filters.amenities.includes(amenity) ? "filled" : "outlined"}
+                                        sx={{
+                                            borderRadius: '16px',
+                                            transition: 'all 0.3s ease',
+                                            borderColor: alpha(theme.palette.text.primary, 0.1),
+                                            '&:hover': {
+                                                borderColor: theme.palette.primary.main,
+                                            },
+                                        }}
+                                    />
+                                ))}
+                            </Box>
+                        </Box>
+                    </Box>
+                )}
+                <Box mt={3} display="flex" justifyContent="space-between" alignItems="center">
+                    <Button
+                        onClick={() => setShowAdvanced(!showAdvanced)}
+                        startIcon={<TuneIcon />}
+                        variant="text"
+                        sx={{
+                            color: theme.palette.text.secondary,
+                            '&:hover': {
+                                color: theme.palette.primary.main,
+                            },
+                        }}
+                    >
+                        {showAdvanced ? 'Hide' : 'Show'} Filters
+                    </Button>
+                    <Tooltip title="Clear all filters">
+                        <IconButton 
+                            onClick={handleClearFilters} 
+                            size="small"
+                            sx={{
+                                color: theme.palette.text.secondary,
+                                '&:hover': {
+                                    color: theme.palette.primary.main,
+                                },
+                            }}
+                        >
+                            <ClearIcon />
+                        </IconButton>
+                    </Tooltip>
                 </Box>
             </form>
         </ThemeProvider>

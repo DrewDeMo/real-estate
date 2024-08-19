@@ -8,7 +8,7 @@ import HeroSection from '../components/HeroSection';
 import DreamLivingSpaces from '../components/DreamLivingSpaces';
 import { motion, AnimatePresence } from 'framer-motion';
 import { blogPosts } from './Blog'; // Import blog posts from Blog page
-import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaCalendarAlt, FaComment } from 'react-icons/fa';
+import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaCalendarAlt, FaComment, FaTimes } from 'react-icons/fa';
 import { useTheme } from '@mui/material/styles';
 
 // Import testimonial images
@@ -72,9 +72,61 @@ const testimonials = [
     }
 ];
 
+const SellPropertyModule = ({ isOpen, onClose }) => {
+    const theme = useTheme();
+    return (
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                >
+                    <motion.div
+                        initial={{ scale: 0.9, y: 20 }}
+                        animate={{ scale: 1, y: 0 }}
+                        exit={{ scale: 0.9, y: 20 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className="bg-white rounded-lg p-8 max-w-md w-full relative"
+                        style={{ backgroundColor: theme.palette.background.paper }}
+                    >
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                            style={{ color: theme.palette.text.secondary }}
+                        >
+                            <FaTimes className="w-6 h-6" />
+                        </button>
+                        <h2 className="text-2xl font-bold mb-4" style={{ color: theme.palette.text.primary }}>
+                            Post Your Property
+                        </h2>
+                        <p className="mb-4" style={{ color: theme.palette.text.secondary }}>
+                            Fill out the form below to list your property with us.
+                        </p>
+                        {/* Add your property listing form here */}
+                        <form>
+                            {/* Form fields go here */}
+                            <button
+                                type="submit"
+                                className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300"
+                                style={{ backgroundColor: theme.palette.primary.main, color: theme.palette.primary.contrastText }}
+                            >
+                                Submit Listing
+                            </button>
+                        </form>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+};
+
 export default function Home() {
     const theme = useTheme();
     const [currentTestimonial, setCurrentTestimonial] = useState(0);
+    const [isSellPropertyOpen, setIsSellPropertyOpen] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -105,6 +157,20 @@ export default function Home() {
                             <p className="mt-4 text-xl" style={{ color: theme.palette.text.secondary }}>Discover our handpicked selection of premium properties</p>
                         </div>
                         <FeaturedListingsCarousel />
+                        <div className="text-center mt-8">
+                            <motion.button
+                                onClick={() => setIsSellPropertyOpen(true)}
+                                className="px-6 py-3 text-lg font-semibold rounded-full"
+                                style={{
+                                    backgroundColor: theme.palette.primary.main,
+                                    color: theme.palette.primary.contrastText,
+                                }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                Post a Property
+                            </motion.button>
+                        </div>
                     </div>
                 </section>
 
@@ -148,7 +214,7 @@ export default function Home() {
                                         <div className="flex items-center text-sm mb-2" style={{ color: theme.palette.text.secondary }}>
                                             <div className="flex items-center mr-4">
                                                 <FaCalendarAlt className="mr-1" />
-                                                <span>02 Apr 2024</span>
+                                                <span>{post.date}</span>
                                             </div>
                                             <div className="flex items-center">
                                                 <FaComment className="mr-1" />
@@ -159,12 +225,25 @@ export default function Home() {
                                         <p className="mb-4" style={{ color: theme.palette.text.secondary }}>{post.excerpt}</p>
                                         <MotionLink
                                             to={`/blog/${post.id}`}
-                                            className="font-semibold transition duration-300 flex items-center"
-                                            style={{ color: theme.palette.primary.main }}
-                                            whileHover={{ x: 5, color: theme.palette.primary.dark }}
+                                            style={{
+                                                color: theme.palette.secondary.main,
+                                                border: `2px solid ${theme.palette.secondary.main}`,
+                                                backgroundColor: 'transparent',
+                                                padding: '8px 16px',
+                                                borderRadius: '9999px',
+                                                fontSize: '0.875rem',
+                                                fontWeight: 'bold',
+                                                display: 'inline-block',
+                                                textDecoration: 'none',
+                                                transition: 'all 0.3s ease',
+                                            }}
+                                            whileHover={{
+                                                backgroundColor: theme.palette.secondary.main,
+                                                color: theme.palette.secondary.contrastText,
+                                            }}
                                         >
                                             Read More
-                                            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                            <svg className="inline-block w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                                         </MotionLink>
                                     </div>
                                 </motion.div>
@@ -228,6 +307,7 @@ export default function Home() {
                     </div>
                 </section>
             </motion.div>
+            <SellPropertyModule isOpen={isSellPropertyOpen} onClose={() => setIsSellPropertyOpen(false)} />
         </>
     );
 }

@@ -17,24 +17,32 @@ const pageTransition = {
     duration: 0.5
 };
 
+const MotionLink = motion(Link);
+
 export const blogPosts = [
     {
         id: 1,
-        title: "OUTDOOR DIY MAKEOVER TIPS",
-        excerpt: "If you have an outdoor space that you have been able to enjoy time in this summer, perhaps that space is looking a little tired and could use a little refresh right about now.",
-        category: "Home Improvements",
-        date: "August 5, 2024",
-        author: "Mark Gomes",
+        title: "Predicting Your Future Housing Needs",
+        excerpt: "What will your housing needs be in three to five years? If you can figure that out, you can watch the market, target areas and communities you might like to live in, and reap the benefits of planning ahead.",
+        category: "Real Estate Planning",
+        date: "August 12, 2024",
+        author: "Mark Gulla",
         authorImage: markPhoto,
-        content: `For an easy, immediate change try adding new lighting – a touch of whimsy, string lights on a porch, balcony, or pergola will do the trick. For a modern, sleek look there are smart LED light strips you can connect with a virtual assistant like Alexa. Layer light for dimension and to set the mood.
+        content: `To begin the process, start by asking yourself the following questions:
 
-Adding plants is another way to brighten your space. Think colorful annuals grouped in pots, with a color scheme for cohesion. You could also add a shallow planter of succulents on a table. For privacy, full-leaf plants, fast-growing vines, and ornamental grasses are good options.
+What will my family look like in three to five years? Will there be a new addition (or two) to your family? Will you have kids that are grown up and about to move out? What is the possibility that an elderly relative (Mom, Dad or grandparent) will be living with you?
 
-To give your patio furniture a fresh new look, change your cushion covers. Choose a color theme and incorporate that with both solid colors and patterns. Ensure the fabric dries quickly and is easy to clean.
+What will change regarding work and school? Will a teenager be off to college? Will you or your spouse be retired Will someone in your household be starting a home business?
 
-Look to your walls and floors as additional ways to transform your space To add visual interest you can incorporate wall art, fountains, statues, birdhouses, clocks, mirrors, or maybe even a chandelier. Update your flooring with an outdoor rug or interlocking deck tiles to tie things together.
+How will your lifestyle be different? Will you take up a hobby that you'd like to be able to reach easily (such as golf) Do you see yourself wanting to live closer to shopping, theatre, walks in the woods, etc.? Will you eventually be traveling more often and, therefore, not be at home as much?
 
-With a few little tweaks, you can create a whole new ambiance the next time you step outside to relax.`
+How is the community changing? Where is it heading relative to your future needs in terms of residents, noise, sense of community, local developments, etc.? Do you see yourself wanting to live in a quieter community, or a more urban center?
+
+Will the type of home you need change? In three to five years, can you see yourself wanting a larger home? Smaller home? More bedrooms? Larger kitchen?
+
+What are your dreams? Do you dream of living in a particular area or community? Would you love to have a big backyard with a garden someday? Do you sometimes think, "It would be great to have a wooded park with walking trails just a few minutes away."
+
+By looking three to five years into the future, you will be able to predict your housing needs and make plans – today – to ensure you get what you want in the future.`
     },
     {
         id: 2,
@@ -42,7 +50,7 @@ With a few little tweaks, you can create a whole new ambiance the next time you 
         excerpt: "There are many reasons why the air quality in your home may not be at its best. A faulty furnace or an aged carpet are just two potential culprits. Until you get those issues addressed, how can you make your indoor air healthier – today?",
         category: "Home Improvements",
         date: "July 29, 2024",
-        author: "Mark Gomes",
+        author: "Mark Gulla",
         authorImage: markPhoto,
         content: `Here are some ideas:
 
@@ -62,7 +70,7 @@ Of course, you can always open a window. That's the most popular and easiest way
         excerpt: "If you have an outdoor space that you have been able to enjoy time in this summer, perhaps that space is looking a little tired and could use a little refresh right about now.",
         category: "Home Improvements",
         date: "August 5, 2024",
-        author: "Mark Gomes",
+        author: "Mark Gulla",
         authorImage: markPhoto,
         content: `For an easy, immediate change try adding new lighting – a touch of whimsy, string lights on a porch, balcony, or pergola will do the trick. For a modern, sleek look there are smart LED light strips you can connect with a virtual assistant like Alexa. Layer light for dimension and to set the mood.
 
@@ -154,10 +162,28 @@ export default function Blog() {
                                             {post.author}
                                         </span>
                                     </div>
-                                    <Link to={`/blog/${post.id}`} className="inline-flex items-center font-medium hover:underline" style={{ color: theme.palette.primary.main }}>
-                                        Read more
-                                        <svg className="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
-                                    </Link>
+                                    <MotionLink
+                                        to={`/blog/${post.id}`}
+                                        style={{
+                                            color: theme.palette.secondary.main,
+                                            border: `2px solid ${theme.palette.secondary.main}`,
+                                            backgroundColor: 'transparent',
+                                            padding: '8px 16px',
+                                            borderRadius: '9999px',
+                                            fontSize: '0.875rem',
+                                            fontWeight: 'bold',
+                                            display: 'inline-block',
+                                            textDecoration: 'none',
+                                            transition: 'all 0.3s ease',
+                                        }}
+                                        whileHover={{
+                                            backgroundColor: theme.palette.secondary.main,
+                                            color: theme.palette.secondary.contrastText,
+                                        }}
+                                    >
+                                        Read More
+                                        <svg className="inline-block w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                                    </MotionLink>
                                 </div>
                             </div>
                         </motion.article>

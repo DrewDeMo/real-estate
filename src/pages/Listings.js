@@ -50,8 +50,8 @@ const ListingCard = ({ listing }) => {
                 <Link
                     to={`/property/${listing.id}`}
                     style={{
-                        color: theme.palette.primary.main,
-                        border: `2px solid ${theme.palette.primary.main}`,
+                        color: theme.palette.secondary.main,
+                        border: `2px solid ${theme.palette.secondary.main}`,
                         backgroundColor: 'transparent',
                         padding: `${theme.spacing(1)} ${theme.spacing(2)}`,
                         borderRadius: '9999px',
@@ -62,12 +62,12 @@ const ListingCard = ({ listing }) => {
                         transition: 'all 0.3s ease',
                     }}
                     onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = theme.palette.primary.main;
-                        e.target.style.color = theme.palette.primary.contrastText;
+                        e.target.style.backgroundColor = theme.palette.secondary.main;
+                        e.target.style.color = theme.palette.secondary.contrastText;
                     }}
                     onMouseLeave={(e) => {
                         e.target.style.backgroundColor = 'transparent';
-                        e.target.style.color = theme.palette.primary.main;
+                        e.target.style.color = theme.palette.secondary.main;
                     }}
                 >
                     View Listing
@@ -161,7 +161,7 @@ export default function Listings() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                     >
-                        Discover Your Perfect Home
+                        Discover Your <span style={{ color: theme.palette.primary.main, fontWeight: 800 }}>Perfect Home</span>
                     </motion.h1>
                     <p 
                         className="text-xl mb-8" 
