@@ -292,23 +292,23 @@ const CustomArrow = ({ direction, onClick }) => {
                 position: 'absolute',
                 top: '50%',
                 transform: 'translateY(-50%)',
-                [direction]: '20px',
+                [direction]: '10px',
                 zIndex: 1000,
                 cursor: 'pointer',
-                width: '50px',
-                height: '100px',
+                width: '40px',
+                height: '40px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 transition: 'opacity 0.3s ease',
                 opacity: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.3)',
-                borderRadius: '5px',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                borderRadius: '50%',
             }}
         >
             {direction === 'left' ?
-                <FaChevronLeft color="white" size={30} /> :
-                <FaChevronRight color="white" size={30} />
+                <FaChevronLeft color="white" size={20} /> :
+                <FaChevronRight color="white" size={20} />
             }
         </div>
     );
@@ -434,10 +434,10 @@ const HeroSection = ({ onSellProperty }) => {
                     </p>
                     <SearchBar />
                 </motion.div>
-                <div className={`flex ${isMobile ? 'flex-col space-y-4' : 'space-x-4'}`}>
+                <div className="flex space-x-4">
                     <MotionLink
                         to="/listings"
-                        className="text-white px-6 py-3 rounded-full text-lg font-semibold transition duration-300 w-full sm:w-auto text-center"
+                        className="text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-lg font-semibold transition duration-300"
                         style={{ backgroundColor: theme.palette.primary.main }}
                         whileHover={{ scale: 1.05, backgroundColor: theme.palette.primary.dark }}
                         whileTap={{ scale: 0.95 }}
@@ -446,7 +446,7 @@ const HeroSection = ({ onSellProperty }) => {
                     </MotionLink>
                     <motion.button
                         onClick={onSellProperty}
-                        className="px-6 py-3 rounded-full text-lg font-semibold transition duration-300 w-full sm:w-auto"
+                        className="px-4 py-2 sm:px-6 sm:py-3 rounded-full text-sm sm:text-lg font-semibold transition duration-300"
                         style={{ backgroundColor: theme.palette.background.default, color: theme.palette.text.primary }}
                         whileHover={{ scale: 1.05, backgroundColor: theme.palette.background.paper }}
                         whileTap={{ scale: 0.95 }}
